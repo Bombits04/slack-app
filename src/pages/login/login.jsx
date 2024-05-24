@@ -60,7 +60,7 @@ function Login(props) {
   return (
     <div className="login-container">
       <div className="form-wrapper">
-        <span>LOGIN</span>
+        <span><h1>LOGIN</h1></span>
         <form
           action="submit"
           className="login-form"
