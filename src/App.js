@@ -7,16 +7,17 @@ import {
   Route,
 } from "react-router-dom";
 import Dashboard from './pages/Dashboard/Dashboard';
+import React, { useState } from "react";
 
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/" element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route exact path="/dashboard" element={<Dashboard loggedin={isLoggedIn} />} />
       </Routes>
     </BrowserRouter>
 

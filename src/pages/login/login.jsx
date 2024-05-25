@@ -5,7 +5,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {setIsLoggedIn} = props;
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [user, setUser] = useState(() =>
@@ -53,7 +54,9 @@ function Login(props) {
       }
     } catch (error) {
       if (error.response.data.errors) {
-        return alert(error.response.data.errors);
+        setPassword("")
+        return (alert(error.response.data.errors));
+        
       }
     }
   }
@@ -70,6 +73,7 @@ function Login(props) {
             type="text"
             placeholder="email"
             id="loginEmail"
+            value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
           <input
@@ -77,6 +81,7 @@ function Login(props) {
             name="password"
             placeholder="password"
             id="loginPassword"
+            value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
           <div className="login-button">

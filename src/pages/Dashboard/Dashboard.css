@@ -1,0 +1,30 @@
+.dashboard-container{
+    display: grid;
+    grid-template-areas:
+    "header header header header"
+    "sbar   main   main   main"
+    "sbar   main   main   main"
+    "sbar   main   main   main"
+    "sbar   main   main   main";
+
+    
+    background-color: #b3d8df;
+    height: 100svh;
+    width: 100svw;
+    grid-template-rows: 60px repeat(4,1fr);
+    grid-template-columns: 240px;
+    grid-gap: 10px
+}
+ 
+.sbar-wrapper{
+    grid-area: sbar;
+    background-color: beige;
+}
+.header-wrapper{
+    grid-area: header;
+    background-color: chartreuse;
+}
+.main-wrapper{
+    grid-area: main;
+    background-color: blueviolet;
+}
