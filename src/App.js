@@ -9,8 +9,7 @@ import {
 import Dashboard from './pages/Dashboard/Dashboard';
 import React, { useState } from "react";
 import Signup from "../src/pages/signup/signup";
-
-
+import "semantic-ui-css/semantic.min.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
