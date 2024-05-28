@@ -1,0 +1,23 @@
+[33mcommit 91ae173ab500672d0a93f8a8bab75cd0c6cef9ee[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: Ian Hidalgo <bombits.03@gmail.com>
+Date:   Sat May 25 14:16:40 2024 +0800
+
+    added logic for opening dashboard without signing in
+
+[33mcommit 1d823f8600a13ae823c52510ce21a793bfc7fd4d[m
+Author: Ian Hidalgo <bombits.03@gmail.com>
+Date:   Sat May 25 01:28:29 2024 +0800
+
+    added background image on login page
+
+[33mcommit e9604e4af6d6be3d78e3c7ff4799f21437e68fb7[m
+Author: Ian Hidalgo <bombits.03@gmail.com>
+Date:   Sat May 25 01:02:57 2024 +0800
+
+    added login page
+
+[33mcommit 21a87e400e31b97f3b7de71a7edf6150ba9f8a61[m
+Author: Ian Hidalgo <bombits.03@gmail.com>
+Date:   Thu May 16 19:53:17 2024 +0800
+
+    Initialize project using Create React App
