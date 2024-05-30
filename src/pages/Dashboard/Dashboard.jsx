@@ -16,6 +16,10 @@ function Dashboard(props) {
   const [channelList, setChannels] = useState([]);
   const [channelName, setChannelName] = useState();
   const [currentChannel, setCurrentChannel] = useState();
+  const [chatId, setChatId] = useState(5971);
+
+  const [getMsgFlag, setGetMsgFlag] = useState(true);
+  
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
@@ -53,6 +57,7 @@ function Dashboard(props) {
   function handleChangeChannel(id) {
     const retVal = channelList.find((ret) => ret.id === id);
     setChannelName(retVal.name);
+    setChatId(id);
   }
 
   if (loggedin) {
@@ -74,7 +79,7 @@ function Dashboard(props) {
 
             {/* DISPLAY CHANNEL LIST */}
             <div className="channel-list">
-              {channelList.map((chnls) => {
+              {channelList?.map((chnls) => {
                 const { name, id } = chnls;
                 return (
                   <span key={id} onClick={() => handleChangeChannel(id)}>
@@ -98,7 +103,7 @@ function Dashboard(props) {
                 </>
               );
             })} */}
-            <ChatBox />
+            <ChatBox user={user} chatId={chatId} recClass={'Channel'} getMsgFlag={() => setGetMsgFlag(true)} setGetMsgFlag={setGetMsgFlag} />
           </div>
           <div className="message-box">
             <textarea />
