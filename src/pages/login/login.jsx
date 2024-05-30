@@ -5,18 +5,18 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-    const {setIsLoggedIn} = props;
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { setIsLoggedIn } = props;
+  //   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [user, setUser] = useState(
-    () => JSON.parse(localStorage.getItem("user"))
+  const [user, setUser] = useState(() =>
+    JSON.parse(localStorage.getItem("user"))
   );
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-        setIsLoggedIn(true);
+      setIsLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/dashboard");
       console.log(user);
@@ -49,21 +49,22 @@ function Login(props) {
           client,
           uid,
           id: data.data.id,
-        })
+        });
         setIsLoggedIn(true);
-      }  
+      }
     } catch (error) {
       if (error.response.data.errors) {
-        setPassword("")
-        return (alert(error.response.data.errors));
-        
+        setPassword("");
+        return alert(error.response.data.errors);
       }
     }
   }
   return (
     <div className="login-container">
       <div className="form-wrapper">
-        <span><h1>LOGIN</h1></span>
+        <span>
+          <h1>LOGIN</h1>
+        </span>
         <form
           action="submit"
           className="login-form"
@@ -86,7 +87,9 @@ function Login(props) {
           />
           <div className="login-button">
             <button type="submit">Login</button>
-            <button type="button" onClick={() => navigate('/signup')}>Sign-up</button>
+            <button type="button" onClick={() => navigate("/signup")}>
+              Sign-up
+            </button>
           </div>
         </form>
       </div>
