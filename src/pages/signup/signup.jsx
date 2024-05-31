@@ -46,7 +46,7 @@ const Signup = () => {
                 <Header icon as="h2" className="header-text">
                     <br />
                     <img src={logo} alt="App Logo" className="logo" />
-                    <h2 className="header-text">Slackerino</h2>
+                    <h1 className="header-text">Slackerino</h1>
                 </Header>
                 <Form className="form-segment" onSubmit={handleSubmit}>
                     <Segment stacked>

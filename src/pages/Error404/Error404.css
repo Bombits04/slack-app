@@ -1,0 +1,19 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.rotating-logo {
+    animation: rotate 5s linear infinite;
+    width: 150px;
+    margin: 20px 0;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
