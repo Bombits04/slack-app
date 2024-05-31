@@ -15,39 +15,41 @@ function Dashboard(props) {
   const [userList, setUserList] = useState([]);
   const [channelList, setChannels] = useState([]);
   const [channelName, setChannelName] = useState();
-  const [currentChannel, setCurrentChannel] = useState();
-  const [chatId, setChatId] = useState(5971);
+  const [fetchChannelFlag, setFetchChannelFlag] = useState(false);
+  // const [currentChannel, setCurrentChannel] = useState();
+  const [chatId, setChatId] = useState(0);
 
   const [getMsgFlag, setGetMsgFlag] = useState(true);
-  
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
     if (!loggedin) {
       navigate("/");
-    }
+    } else {
 
-    //FETCH USER START
-    async function fetchUsers() {
-      const users = await UserService.getUsers(user);
-      setUserList(users);
-    }
-    //do fetch users if userList is not yet populated
-    if (userList.length === 0) {
-      fetchUsers();
-    }
-    //FETCH USER END
 
-    //FETCH CHANNELS START
-    async function fetchChannels() {
-      await ChannelService.getChannels(user, setChannels, setChannelName);
+      //FETCH USER START
+      async function fetchUsers() {
+        const users = await UserService.getUsers(user);
+        setUserList(users);
+      }
+      //do fetch users if userList is not yet populated
+      if (userList.length === 0) {
+        fetchUsers();
+      }
+      //FETCH USER END
+
+      //FETCH CHANNELS START
+      async function fetchChannels() {
+        await ChannelService.getChannels(user, setChannels, setChannelName, setChatId, setFetchChannelFlag);
+      }
+      // setChannelName(channelList[0].name);
+      if (!fetchChannelFlag) {
+        fetchChannels();
+      }
+      //FETCH CHANNELS END
     }
-    // setChannelName(channelList[0].name);
-    if (channelList.length === 0) {
-      fetchChannels();
-    }
-    //FETCH CHANNELS END
-  });
+  },[loggedin]);
 
   function logout() {
     localStorage.clear();
@@ -79,7 +81,7 @@ function Dashboard(props) {
 
             {/* DISPLAY CHANNEL LIST */}
             <div className="channel-list">
-              {channelList?.map((chnls) => {
+              {channelList && channelList.map((chnls) => {
                 const { name, id } = chnls;
                 return (
                   <span key={id} onClick={() => handleChangeChannel(id)}>
@@ -87,6 +89,9 @@ function Dashboard(props) {
                   </span>
                 );
               })}
+              {
+                !channelList && <span>No channels found</span>
+              }
             </div>
             <li>Direct Messages</li>
           </ul>
@@ -103,7 +108,13 @@ function Dashboard(props) {
                 </>
               );
             })} */}
-            <ChatBox user={user} chatId={chatId} recClass={'Channel'} getMsgFlag={() => setGetMsgFlag(true)} setGetMsgFlag={setGetMsgFlag} />
+            <ChatBox
+              user={user}
+              chatId={chatId}
+              recClass={"Channel"}
+              getMsgFlag={() => setGetMsgFlag(true)}
+              setGetMsgFlag={setGetMsgFlag}
+            />
           </div>
           <div className="message-box">
             <textarea />
