@@ -1,4 +1,3 @@
-
 import './App.css';
 import Login from "../src/pages/login/login";
 import {
@@ -8,7 +7,7 @@ import {
 } from "react-router-dom";
 import Dashboard from './pages/Dashboard/Dashboard';
 import React, { useState } from "react";
-import Signup from "../src/pages/signup/signup";
+import Signup from "../src/pages/signup/Signup";
 import "semantic-ui-css/semantic.min.css";
 
 function App() {
