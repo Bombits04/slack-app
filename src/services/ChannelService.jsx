@@ -2,7 +2,13 @@ import { API_URL } from "../constants/Constants";
 import axios from "axios";
 
 const ChannelService = {
-  getChannels: async function (user, setChannels, setChannelName, setChatId, setFetchChannelFlag) {
+  getChannels: async function (
+    user,
+    setChannels,
+    setHeaderName,
+    setChatId,
+    setFetchChannelFlag
+  ) {
     try {
       const headers = {
         "access-token": user.accessToken,
@@ -16,12 +22,11 @@ const ChannelService = {
 
       if (data) {
         // setChannels(data.data);
-        console.log("tae" + data.errors);
         //SET INITIAL VALUE TO THE FIRST ITEM IN ARRAY
-        if(data){
+        if (data) {
           setChannels(data.data);
-          if(data.data){
-            setChannelName(data.data[0].name);
+          if (data.data) {
+            setHeaderName(data.data[0].name);
             setChatId(data.data[0].id);
           }
         }
@@ -33,12 +38,12 @@ const ChannelService = {
     setFetchChannelFlag(true);
   },
 
-  getMessage: async function (user, channelId, recClass, setChannelMessages) {
+  getMessage: async function (user, channelId, recClass, setChannelMessages, setMessage) {
     //FOR DEBUGGING
     console.log(user);
     console.log(channelId);
-    // console.log(recClass);
-
+    console.log(recClass);
+    
     try {
       const headers = {
         "access-token": user.accessToken,

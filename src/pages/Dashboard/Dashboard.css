@@ -33,12 +33,17 @@
   grid-area: main;
   background-color: blueviolet;
 }
-.channel-list {
+.channel-list, .directmsg-list  {
   display: flex;
   flex-direction: column;
   margin-left: 15px;
 }
 .channel-list span {
+  font-weight: bold;
+  cursor: pointer;
+  width: max-content;
+}
+.directmsg-list span {
   font-weight: bold;
   cursor: pointer;
   width: max-content;

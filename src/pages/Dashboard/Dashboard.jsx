@@ -14,20 +14,24 @@ function Dashboard(props) {
 
   const [userList, setUserList] = useState([]);
   const [channelList, setChannels] = useState([]);
-  const [channelName, setChannelName] = useState();
-  const [fetchChannelFlag, setFetchChannelFlag] = useState(false);
-  // const [currentChannel, setCurrentChannel] = useState();
+  const [headerName, setHeaderName] = useState();
+  const [fetchChannelFlag, setFetchChannelFlag] = useState(true);
   const [chatId, setChatId] = useState(0);
-
   const [getMsgFlag, setGetMsgFlag] = useState(true);
+  localStorage.setItem("dmList", JSON.stringify([]));
+  const [listOfUserDm, setListOfUserDm] = useState([]);
+  const [directMessages, setDirectMessages] = useState([]);
+  const [getDirectMessagesFlag, setDirectMessagesFlag] = useState(true);
+  const [getDirectMessageUsers, setDirectMessageUsers] = useState([]);
+  const [recClass, setRecClass] = useState();
+  
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
     if (!loggedin) {
       navigate("/");
     } else {
-
-
+      console.log("Start");
       //FETCH USER START
       async function fetchUsers() {
         const users = await UserService.getUsers(user);
@@ -41,29 +45,70 @@ function Dashboard(props) {
 
       //FETCH CHANNELS START
       async function fetchChannels() {
-        await ChannelService.getChannels(user, setChannels, setChannelName, setChatId, setFetchChannelFlag);
+        await ChannelService.getChannels(
+          user,
+          setChannels,
+          setHeaderName,
+          setChatId,
+          setFetchChannelFlag
+        );
       }
-      // setChannelName(channelList[0].name);
-      if (!fetchChannelFlag) {
+
+      if (fetchChannelFlag) {
         fetchChannels();
       }
       //FETCH CHANNELS END
-    }
-  },[loggedin]);
 
+      async function fetchUserDmList() {
+      //   setDirectMessages([]);
+      // setDirectMessageUsers([]);
+       const dirMsgs = await UserService.getDirectMessages(
+          user,
+          userList,
+          setDirectMessages,
+          setDirectMessagesFlag,
+          setDirectMessageUsers
+        );
+      }
+
+      // function removeDuplicateUserId (){
+      //   let temp = []
+      //   let isDup = []
+      //   directMessages.map((userDm)=>{
+      //   isDup = temp.filter((id) => id === userDm.receiver.id)
+      //   if (isDup == 0){
+      //     // temp.push(userDm.receiver.id)
+      //     setDmUsers((old) => [...old, temp]);
+      //     console.log(temp)
+      //   }
+      //   })
+        
+      // }
+      fetchUserDmList();
+      if (getDirectMessageUsers.length < 0) {
+        
+        // setDirectMessagesFlag(false)
+      }
+      // if (!getDirectMessagesFlag){
+      //   removeDuplicateUserId();
+      // }
+
+    } //useEffect end
+  }, [loggedin, userList]);
+  // loggedin, userList, getDirectMessagesFlag
   function logout() {
     localStorage.clear();
     setIsLoggedIn(false);
   }
 
-  function handleChangeChannel(id) {
-    const retVal = channelList.find((ret) => ret.id === id);
-    setChannelName(retVal.name);
+  function handleChangeChannel(id, recClass) {
+    // const retVal = channelList.find((ret) => ret.id === id);
+    // setHeaderName(retVal.name);
     setChatId(id);
+    setRecClass(recClass)
   }
 
   if (loggedin) {
-    // console.log("chnl list: ")
     return (
       <div className="dashboard-container">
         <div className="header-wrapper">
@@ -81,37 +126,43 @@ function Dashboard(props) {
 
             {/* DISPLAY CHANNEL LIST */}
             <div className="channel-list">
-              {channelList && channelList.map((chnls) => {
-                const { name, id } = chnls;
-                return (
-                  <span key={id} onClick={() => handleChangeChannel(id)}>
-                    {name}
-                  </span>
-                );
-              })}
-              {
-                !channelList && <span>No channels found</span>
-              }
+              {console.log(directMessages)}
+              {channelList &&
+                channelList.map((chnls) => {
+                  const { name, id } = chnls;
+                  return (
+                    <span key={id} onClick={() => handleChangeChannel(id, "Channel")}>
+                      {name}
+                    </span>
+                  );
+                })}
+              {!channelList && (
+                <span style={{ cursor: "default" }}>No channels found</span>
+              )}
             </div>
             <li>Direct Messages</li>
+            <div className="directmsg-list">
+              { getDirectMessageUsers &&
+                getDirectMessageUsers?.toSorted().map((ids) => {
+                  if (ids !== null){
+                 return <span key={ids.recId} onClick={() => handleChangeChannel(ids.recId, "User")}> {ids.recUid}</span>
+                }
+                }) }
+            
+              {/* {!getDirectMessageUsers && 
+                <span style={{ cursor: "default" }}>No direct messages</span>
+              } */}
+            </div>
           </ul>
         </div>
 
         <div className="main-wrapper">
-          <h1>{channelName}</h1>
+          <h1>{headerName}</h1>
           <div className="chat-box">
-            {/* {userList.map((user) => {
-              const { uid, id } = user;
-              return (
-                <>
-                  <p key={id}>{uid}</p>
-                </>
-              );
-            })} */}
             <ChatBox
               user={user}
               chatId={chatId}
-              recClass={"Channel"}
+              recClass={recClass}
               getMsgFlag={() => setGetMsgFlag(true)}
               setGetMsgFlag={setGetMsgFlag}
             />

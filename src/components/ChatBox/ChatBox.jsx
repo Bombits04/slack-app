@@ -19,7 +19,6 @@ function ChatBox(props) {
     if (getMsgFlag) {
       fetchMessages();
       setGetMsgFlag(false);
-
     }
   },[chatId, recClass]);
 

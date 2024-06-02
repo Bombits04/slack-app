@@ -19,7 +19,7 @@ function Login(props) {
       setIsLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/dashboard");
-      console.log(user);
+      // console.log(user);
     }
   }, [user, navigate, setIsLoggedIn]);
 
