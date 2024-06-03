@@ -1,4 +1,4 @@
-import ChannelService from "../../services/ChannelService";
+import MessageService from "../../services/MessageService";
 import { useEffect, useState } from "react";
 
 function ChatBox(props) {
@@ -8,7 +8,7 @@ function ChatBox(props) {
 
   useEffect(() => {
     async function fetchMessages() {
-      await ChannelService.getMessage(
+      await MessageService.getMessage(
         user,
         chatId,
         recClass,
@@ -19,8 +19,9 @@ function ChatBox(props) {
     if (getMsgFlag) {
       fetchMessages();
       setGetMsgFlag(false);
+      console.log("message fetched")
     }
-  },[chatId, recClass]);
+  },[chatId, recClass, getMsgFlag]);
 
   return (
     <div className="chatbox">

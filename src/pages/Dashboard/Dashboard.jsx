@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 import ChannelService from "../../services/ChannelService";
-
+import MessageService from "../../services/MessageService";
 import ChatBox from "../../components/ChatBox/ChatBox";
 
 function Dashboard(props) {
@@ -18,12 +18,12 @@ function Dashboard(props) {
   const [fetchChannelFlag, setFetchChannelFlag] = useState(true);
   const [chatId, setChatId] = useState(0);
   const [getMsgFlag, setGetMsgFlag] = useState(true);
-  localStorage.setItem("dmList", JSON.stringify([]));
-  const [listOfUserDm, setListOfUserDm] = useState([]);
   const [directMessages, setDirectMessages] = useState([]);
   const [getDirectMessagesFlag, setDirectMessagesFlag] = useState(true);
   const [getDirectMessageUsers, setDirectMessageUsers] = useState([]);
   const [recClass, setRecClass] = useState();
+
+  const[inputMessage, setInputMessage] = useState();
   
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Dashboard(props) {
     if (!loggedin) {
       navigate("/");
     } else {
-      console.log("Start");
+      // console.log("Start");
       //FETCH USER START
       async function fetchUsers() {
         const users = await UserService.getUsers(user);
@@ -71,31 +71,11 @@ function Dashboard(props) {
         );
       }
 
-      // function removeDuplicateUserId (){
-      //   let temp = []
-      //   let isDup = []
-      //   directMessages.map((userDm)=>{
-      //   isDup = temp.filter((id) => id === userDm.receiver.id)
-      //   if (isDup == 0){
-      //     // temp.push(userDm.receiver.id)
-      //     setDmUsers((old) => [...old, temp]);
-      //     console.log(temp)
-      //   }
-      //   })
-        
-      // }
       fetchUserDmList();
-      if (getDirectMessageUsers.length < 0) {
-        
-        // setDirectMessagesFlag(false)
-      }
-      // if (!getDirectMessagesFlag){
-      //   removeDuplicateUserId();
-      // }
-
+      
     } //useEffect end
-  }, [loggedin, userList]);
-  // loggedin, userList, getDirectMessagesFlag
+  }, [userList]);
+ 
   function logout() {
     localStorage.clear();
     setIsLoggedIn(false);
@@ -106,6 +86,17 @@ function Dashboard(props) {
     // setHeaderName(retVal.name);
     setChatId(id);
     setRecClass(recClass)
+    setGetMsgFlag(true)
+  }
+
+ async function sendMessage(id, recClass){
+    const request = {
+      receiver_id: Number(id),
+      receiver_class: recClass,
+      body: inputMessage
+  };
+  const sendMsg = await MessageService.sendMessage(user, id, recClass, request)
+  setGetMsgFlag(true);
   }
 
   if (loggedin) {
@@ -126,7 +117,6 @@ function Dashboard(props) {
 
             {/* DISPLAY CHANNEL LIST */}
             <div className="channel-list">
-              {console.log(directMessages)}
               {channelList &&
                 channelList.map((chnls) => {
                   const { name, id } = chnls;
@@ -144,7 +134,7 @@ function Dashboard(props) {
             <div className="directmsg-list">
               { getDirectMessageUsers &&
                 getDirectMessageUsers?.toSorted().map((ids) => {
-                  if (ids !== null){
+                  if (ids !== null && ids.recId !== user.id){
                  return <span key={ids.recId} onClick={() => handleChangeChannel(ids.recId, "User")}> {ids.recUid}</span>
                 }
                 }) }
@@ -163,16 +153,19 @@ function Dashboard(props) {
               user={user}
               chatId={chatId}
               recClass={recClass}
-              getMsgFlag={() => setGetMsgFlag(true)}
+              getMsgFlag={getMsgFlag}
               setGetMsgFlag={setGetMsgFlag}
             />
           </div>
           <div className="message-box">
-            <textarea />
+            <textarea value={inputMessage} onChange={(e) => setInputMessage(e.target.value)}/>
+            <input type="button" value="Send" onClick={() => sendMessage(chatId, recClass)}></input>
           </div>
         </div>
       </div>
     );
+  }else{
+    navigate("/")
   }
 }
 export default Dashboard;

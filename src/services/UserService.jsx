@@ -60,7 +60,7 @@ const UserService = {
             
             //check for duplicate message ids
             // const isFound = temp.find((id1) => id1 === usrid.id);
-              setDirectMessages((oldLis) => [...oldLis, oldLis.some((data) => JSON.stringify(data) === JSON.stringify(usrid))? null : usrid]);
+              // setDirectMessages((oldLis) => [...oldLis, oldLis.some((data) => JSON.stringify(data) === JSON.stringify(usrid))? null : usrid]);
               const messangerDetails = {
                 recId: usrid.receiver.id,
                 recUid: usrid.receiver.uid
