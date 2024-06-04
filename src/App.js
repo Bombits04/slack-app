@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Dashboard from './pages/Dashboard/Dashboard';
 import React, { useState } from "react";
-import Signup from "../src/pages/signup/Signup";
+import Signup from "../src/pages/signup/signup";
 import Error404 from "../src/pages/Error404/Error404";
 import "semantic-ui-css/semantic.min.css";
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Form, Segment, Header, Button } from "semantic-ui-react";
 import logo from "../../assets/images/app_logo.png";
-import './Signup.css';
+import './signup.css';
 
 const Signup = () => {
     const [formData, setFormData] = useState({

@@ -157,6 +157,7 @@ function Dashboard(props) {
               setGetMsgFlag={setGetMsgFlag}
             />
           </div>
+          {console.log("test")}
           <div className="message-box">
             <textarea value={inputMessage} onChange={(e) => setInputMessage(e.target.value)}/>
             <input type="button" value="Send" onClick={() => sendMessage(chatId, recClass)}></input>
