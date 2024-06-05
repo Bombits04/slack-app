@@ -26,11 +26,23 @@ function ChatBox(props) {
   return (
     <div className="chatbox">
       {channelMessages?.map((msg) => {
+        if (user.id === msg.receiver.id){
         return (
-          <div className="message-bubble" key={msg.id}>
-            {msg.body}
+          <div className="sender" key={msg.id}>
+            <div className="chat-bubble">
+            {msg.sender.email}: {msg.body}
+            </div>
           </div>
         );
+      }else{
+        return(
+        <div className="receiver" key={msg.id}>
+          <div className="chat-bubble">
+           {msg.sender.email}: {msg.body}
+           </div>
+          </div>
+          )
+      }
       })}
     </div>
   );

@@ -7,23 +7,24 @@
     "sbar   main   main   main"
     "sbar   main   main   main";
 
-  background-color: #b3d8df;
+  background-color: #5C3A58;
   height: 100svh;
   width: 100svw;
   grid-template-rows: 60px repeat(4, 1fr);
-  grid-template-columns: 300px;
+  grid-template-columns: 350px;
   grid-gap: 10px;
 }
 
 .sbar-wrapper {
   grid-area: sbar;
-  background-color: beige;
+  background-color: #6ba8b3;
+  border-radius: 10px;
 }
 .header-wrapper {
   grid-area: header;
   display: flex;
   flex-direction: row;
-  background-color: chartreuse;
+  background-color: #6ba8b3;
   justify-content: space-between;
 }
 .header-wrapper span {
@@ -31,7 +32,8 @@
 }
 .main-wrapper {
   grid-area: main;
-  background-color: blueviolet;
+  background-color: #6ba8b3;
+  border-radius: 10px;
 }
 .channel-list, .directmsg-list  {
   display: flex;
@@ -50,18 +52,34 @@
 }
 .chat-box {
   height: 70%;
-  background-color: aliceblue;
+  background-color: #6ba8b3;
   margin: 20px;
-  padding: 10px;
-  overflow: auto;
+  padding: 8px;
+  box-shadow: inset 0px 0px 23px -2px rgba(0,0,0,0.6);
+  border: 1px solid black;
+  border-radius: 5px;
 }
+/* .chatbox {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  background-color: #ffffff;
+  height: 99%;
+  overflow: auto;
+  border-radius: 3px;
+} */
 .message-box {
   height: 20%;
   margin: 20px;
   padding: 10px;
-  background-color: aqua;
+  background-color: #6ba8b3;
+  border: 1px solid black;
+  box-shadow: inset 0px 0px 23px -2px rgba(0,0,0,0.6);
+  border-radius: 5px;
+  white-space: pre-wrap;
 }
 textarea {
+  white-space: pre-wrap;
   width: 100%;
   max-width: 100%;
   height: 80%;
@@ -111,9 +129,30 @@ textarea {
   margin-bottom: 50px;
   margin-left: 10px;
 }
-/* .overlay{
+.chatbox {
+  /* display: grid; */
+  /* overflow-anchor: none; */
+  margin: 5px;
+  background-color: #ffffff;
+  height: 98%;
+  overflow: auto;
+  border-radius: 3px;
+}
+.receiver{
+  /* display: block; */
+  display: flex;
+  /* overflow-anchor: auto; */
   width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1000;
-} */
+  justify-content: end;
+}
+.sender{
+  /* overflow-anchor: auto; */
+  width: 100%;
+}
+.chat-bubble{
+  background-color: #f7e98d;
+  margin: 10px 5px 10px 5px;
+  padding: 15px;
+  width: fit-content;
+  border-radius: 50px; 
+}

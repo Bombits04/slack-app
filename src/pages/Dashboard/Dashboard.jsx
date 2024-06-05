@@ -5,7 +5,7 @@ import UserService from "../../services/UserService";
 import ChannelService from "../../services/ChannelService";
 import MessageService from "../../services/MessageService";
 import ChatBox from "../../components/ChatBox/ChatBox";
-import ModalAddChannel from "../../components/modal/Modalico";
+import ModalAddChannel from "../../components/AddChannelModal/AddChannelModal";
 
 function Dashboard(props) {
   const { loggedin, setIsLoggedIn } = props;
