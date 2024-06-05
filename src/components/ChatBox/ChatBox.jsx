@@ -19,7 +19,7 @@ function ChatBox(props) {
     if (getMsgFlag) {
       fetchMessages();
       setGetMsgFlag(false);
-      console.log("message fetched")
+      // console.log("message fetched")
     }
   },[chatId, recClass, getMsgFlag]);
 

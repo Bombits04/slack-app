@@ -70,3 +70,50 @@ textarea {
   border: 1px solid #f7e98d;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.channel-header{
+  margin-left: 10px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  /* border: 1px black solid; */
+}
+.channel-container{
+  margin-left: 15px;
+  display: flex;
+  gap: 20px;
+}
+.channel-container svg{
+  cursor: pointer;
+}
+.channel-header svg{
+  cursor: pointer;
+}
+.direct-message-header{
+  margin-left: 10px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+
+.direct-message-container{
+  margin-left: 15px;
+  display: flex;
+  gap: 20px;
+}
+.direct-message-header svg{
+  cursor: pointer;
+}
+.app-title{
+  display: inline-block;
+  font-size: 3rem;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  margin-left: 10px;
+}
+/* .overlay{
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1000;
+} */

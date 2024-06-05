@@ -5,9 +5,9 @@ const MessageService = {
 
 getMessage: async function (user, channelId, recClass, setChannelMessages, setMessage) {
     //FOR DEBUGGING
-    console.log(user);
-    console.log(channelId);
-    console.log(recClass);
+    // console.log(user);
+    // console.log(channelId);
+    // console.log(recClass);
     
     try {
       const headers = {
