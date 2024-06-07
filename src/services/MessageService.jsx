@@ -28,7 +28,7 @@ getMessage: async function (user, channelId, recClass, setChannelMessages, setMe
     }
   },
 
-  sendMessage: async function(user, userId, recClass, request){
+  sendMessage: async function(user, userId, recClass, request,setInputMessage){
     try{
     const headers = {
         "access-token": user.accessToken,
@@ -42,11 +42,14 @@ getMessage: async function (user, channelId, recClass, setChannelMessages, setMe
 
       if (data) {
        console.log(data.data);
+      }else{
+        alert("Message not sent")
       }
         
      }catch (error) {
         return alert(error.res.data.errors);
       }
+      setInputMessage("");
 },
 }
 

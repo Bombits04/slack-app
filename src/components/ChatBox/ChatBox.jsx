@@ -19,30 +19,29 @@ function ChatBox(props) {
     if (getMsgFlag) {
       fetchMessages();
       setGetMsgFlag(false);
-      // console.log("message fetched")
     }
-  },[chatId, recClass, getMsgFlag]);
+  }, [chatId, recClass, getMsgFlag]);
 
   return (
     <div className="chatbox">
       {channelMessages?.map((msg) => {
-        if (user.id === msg.receiver.id){
-        return (
-          <div className="sender" key={msg.id}>
-            <div className="chat-bubble">
-            {msg.sender.email}: {msg.body}
+        if (user.id === msg.sender.id) {
+          return (
+            <div className="sender" key={msg.id}>
+              <div className="chat-bubble">
+                {msg.sender.email}: {msg.body}
+              </div>
             </div>
-          </div>
-        );
-      }else{
-        return(
-        <div className="receiver" key={msg.id}>
-          <div className="chat-bubble">
-           {msg.sender.email}: {msg.body}
-           </div>
-          </div>
-          )
-      }
+          );
+        } else {
+          return (
+            <div className="receiver" key={msg.id}>
+              <div className="chat-bubble">
+               {msg.sender.email}: {msg.body}
+              </div>
+            </div>
+          );
+        }
       })}
     </div>
   );
