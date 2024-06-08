@@ -29,7 +29,7 @@ function ChatBox(props) {
           return (
             <div className="sender" key={msg.id}>
               <div className="chat-bubble">
-                {msg.sender.email}: {msg.body}
+                <i>{msg.sender.email}</i>: {msg.body}
               </div>
             </div>
           );
@@ -37,7 +37,7 @@ function ChatBox(props) {
           return (
             <div className="receiver" key={msg.id}>
               <div className="chat-bubble">
-               {msg.sender.email}: {msg.body}
+               <i>{msg.sender.email}</i>: {msg.body}
               </div>
             </div>
           );

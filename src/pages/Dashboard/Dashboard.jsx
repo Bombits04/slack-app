@@ -6,7 +6,7 @@ import ChannelService from "../../services/ChannelService";
 import MessageService from "../../services/MessageService";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import ModalAddChannel from "../../components/AddChannelModal/AddChannelModal";
-import appLogo from "../../assets/images/app_logo.png"
+import appLogo from "../../assets/images/app_logo.png";
 
 function Dashboard(props) {
   const { loggedin, setIsLoggedIn } = props;
@@ -24,7 +24,8 @@ function Dashboard(props) {
   const [getDirectMessagesFlag, setDirectMessagesFlag] = useState(true);
   const [getDirectMessageUsers, setDirectMessageUsers] = useState([]);
   const [recClass, setRecClass] = useState();
-
+  const [addNewChannelFlag, setAddNewChannelFlag] = useState();
+  const [isReloadChannelList, setIsReloadChannelList] = useState(false);
   const [inputMessage, setInputMessage] = useState();
 
   useEffect(() => {
@@ -51,7 +52,10 @@ function Dashboard(props) {
           setChannels,
           setHeaderName,
           setChatId,
-          setFetchChannelFlag
+          setFetchChannelFlag,
+          setIsReloadChannelList,
+          isReloadChannelList,
+          setAddNewChannelFlag
         );
       }
 
@@ -76,24 +80,41 @@ function Dashboard(props) {
     } //useEffect end
   }, [userList]);
 
+  useEffect(() => {
+    async function refreshChannels() {
+      await ChannelService.getChannels(
+        user,
+        setChannels,
+        setHeaderName,
+        setChatId,
+        setFetchChannelFlag,
+        setIsReloadChannelList,
+        isReloadChannelList,
+        setAddNewChannelFlag
+      );
+    }
+
+    refreshChannels();
+  }, [addNewChannelFlag]);
+
   function logout() {
     localStorage.clear();
     setIsLoggedIn(false);
   }
 
   function handleChangeChannel(id, recClass) {
-    if(id && (recClass === "Channel")){
-    const retVal = channelList.find((ret) => ret.id === id);
-    setHeaderName(retVal.name);
+    if (id && recClass === "Channel") {
+      const retVal = channelList.find((ret) => ret.id === id);
+      setHeaderName(retVal.name);
     }
-    
-    if(id && (recClass === "User")){
-      console.log(getDirectMessageUsers)
-    // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
-      const retValtemp = getDirectMessageUsers.filter((fltr) => fltr !== null )
-      const retVal = retValtemp.find((ret) => ret.recId === id)
+
+    if (id && recClass === "User") {
+      console.log(getDirectMessageUsers);
+      // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
+      const retValtemp = getDirectMessageUsers.filter((fltr) => fltr !== null);
+      const retVal = retValtemp.find((ret) => ret.recId === id);
       // console.log(retVal);
-    setHeaderName(retVal.recUid)
+      setHeaderName(retVal.recUid);
     }
     setChatId(id);
     setRecClass(recClass);
@@ -114,28 +135,35 @@ function Dashboard(props) {
       setInputMessage
     );
     setGetMsgFlag(true);
-
   }
 
   if (loggedin) {
     return (
-      
       <div className="dashboard-container">
         <div className="header-wrapper">
-        
           <span className="header caveat-700">
-          <img src={appLogo} width="55px" alt="logo" /> Slackerino 
+            <img src={appLogo} width="55px" alt="logo" /> Slackerino
           </span>
           <span className="logout">
-            <svg  xmlns="http://www.w3.org/2000/svg" width="30px" onClick={logout} viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30px"
+              onClick={logout}
+              viewBox="0 0 512 512"
+            >
+              <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
+            </svg>
           </span>
         </div>
         <div className="sbar-wrapper">
           <div className="app-title">Dashboard</div>
-          
+
           <div className="channel-header">
             <span>Channels</span>
-            <ModalAddChannel></ModalAddChannel>
+            <ModalAddChannel
+              user={user}
+              setAddNewChannelFlag={setAddNewChannelFlag}
+            ></ModalAddChannel>
           </div>
           {/* DISPLAY CHANNEL LIST */}
           <div className="channel-list">
@@ -172,30 +200,34 @@ function Dashboard(props) {
             )}
           </div>
           <div className="direct-message-header">
-          <span>Direct Messages</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18px" viewBox="0 0 640 512"><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+            <span>Direct Messages</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18px"
+              viewBox="0 0 640 512"
+            >
+              <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+            </svg>
           </div>
           <div className="directmsg-list">
-           
             {getDirectMessageUsers &&
               getDirectMessageUsers?.toSorted().map((ids) => {
                 if (ids !== null && ids.recId !== user.id) {
                   return (
-                    
                     <div className="direct-message-container">
                       <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="8px"
-                      viewBox="0 0 384 512"
-                    >
-                      <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
-                    </svg>
-                    <span
-                      key={ids.recId}
-                      onClick={() => handleChangeChannel(ids.recId, "User")}
-                    >
-                      {ids.recUid}
-                    </span>
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8px"
+                        viewBox="0 0 384 512"
+                      >
+                        <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                      </svg>
+                      <span
+                        key={ids.recId}
+                        onClick={() => handleChangeChannel(ids.recId, "User")}
+                      >
+                        {ids.recUid}
+                      </span>
                     </div>
                   );
                 }
@@ -217,7 +249,6 @@ function Dashboard(props) {
               getMsgFlag={getMsgFlag}
               setGetMsgFlag={setGetMsgFlag}
             />
-            
           </div>
           <div className="message-box">
             <textarea
@@ -231,7 +262,6 @@ function Dashboard(props) {
             ></input>
           </div>
         </div>
-       
       </div>
     );
   } else {

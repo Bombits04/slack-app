@@ -7,7 +7,10 @@ const ChannelService = {
     setChannels,
     setHeaderName,
     setChatId,
-    setFetchChannelFlag
+    setFetchChannelFlag,
+    setIsReloadChannelList,
+    isReloadChannelList,
+    setAddNewChannelFlag
   ) {
     try {
       const headers = {
@@ -25,20 +28,68 @@ const ChannelService = {
         //SET INITIAL VALUE TO THE FIRST ITEM IN ARRAY
         if (data) {
           setChannels(data.data);
-          if (data.data) {
-            setHeaderName(data.data[0].name);
-            setChatId(data.data[0].id);
+          // setAddNewChannelFlag(false);
+          if (!isReloadChannelList) {
+            if (data.data) {
+              setHeaderName(data.data[0].name);
+              setChatId(data.data[0].id);
+            }
           }
+          setAddNewChannelFlag(false);
         }
       }
     } catch (error) {
-      return alert(error.res.data.errors);
+      return alert(error);
     }
 
     setFetchChannelFlag(true);
   },
 
-  
+  addChannel: async function (
+    user,
+    setAddNewChannelFlag,
+    newChannelName,
+    memberIds
+  ) {
+    try {
+      const headers = {
+        "access-token": user.accessToken,
+        client: user.client,
+        expiry: user.expiry,
+        uid: user.uid,
+      };
+
+      const request = {
+        name: newChannelName,
+        user_ids: memberIds,
+      };
+
+      const res = await axios.post(`${API_URL}/channels`, request, { headers });
+      const { data } = res;
+
+      // console.log(data.data)
+      // console.log(data)
+      if (res.status === 200 || res.status === 201) {
+        if (data.errors) {
+          alert("tae" + data.errors);
+          setAddNewChannelFlag(true);
+        } else {
+          setAddNewChannelFlag(true)
+          alert("Channel created successfully!");
+        }
+
+        // console.log(data.data)
+        // setAddNewChannelFlag(true);
+      } else {
+        setAddNewChannelFlag(true)
+        alert("Errors were encountered :(");
+      }
+    } catch (error) {
+      console.log("tae" + error);
+      setAddNewChannelFlag(true)
+      alert("Errorz 500: Internal server error");
+    }
+  },
 };
 
 export default ChannelService;

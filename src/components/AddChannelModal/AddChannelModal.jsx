@@ -2,13 +2,29 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import ChannelService from '../../services/ChannelService';
 
 
-function AddChannelModal() {
+function AddChannelModal(props) {
+
+  const {user, setAddNewChannelFlag} = props
   const [show, setShow] = useState(false);
+  const [newChannelName, setNewChannelName] = useState("");
+  const [memberIds, setMemberIds] = useState([]);
 
-  const handleClose = () => setShow(false);
+  // const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  async function handleClose(){
+
+     await ChannelService.addChannel(user, setAddNewChannelFlag, newChannelName, memberIds);
+    // console.log(channelz)
+    // setAddNewChannelFlag(true);
+    setShow(false);
+  }
+  function addChannel(){
+
+  }
 
   return (
     <>
@@ -32,6 +48,8 @@ function AddChannelModal() {
               <Form.Control
                 type="text"
                 placeholder="My Channel"
+                value = {newChannelName}
+                onChange = {(e) => setNewChannelName(e.target.value)}
                 autoFocus
               />
             </Form.Group>
@@ -40,6 +58,8 @@ function AddChannelModal() {
               <Form.Control
                 type="email"
                 placeholder="user@email.com"
+                value = {memberIds}
+                onChange = {(e2) => setMemberIds(e2.target.value)}
               />
             </Form.Group>
           </Form>
