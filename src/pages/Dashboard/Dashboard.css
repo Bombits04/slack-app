@@ -40,6 +40,7 @@
   border-radius: 10px;
   overflow: auto;
 }
+
 .header-wrapper {
   grid-area: header;
   display: flex;

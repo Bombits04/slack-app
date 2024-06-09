@@ -48,7 +48,7 @@ const Welcome = () => {
                     <Container className="white-background flex-container">
                         <p className="larger-text">
                             <img src={bubble} width="250px" alt="Chat GIF" />
-                            Welcome back!
+                            Welcome back! Go to dashboard.
                             <button type="button" className="modern-button2" onClick={() => {
                                 setTimeout(() => {
                                     navigate("/redirect");
@@ -61,6 +61,7 @@ const Welcome = () => {
                             </button>
                         </p>
                     </Container>
+                    <br />
                     <br />
                     <br />
                     <Container className="white-background1 flex-container">
