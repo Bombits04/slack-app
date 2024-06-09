@@ -30,6 +30,7 @@ function Dashboard(props) {
   const [isReloadChannelList, setIsReloadChannelList] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   var listOfIds = [];
+  const [emojiModalOpen, setEmojiModalOpen] = useState(false);
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
@@ -355,6 +356,7 @@ function Dashboard(props) {
                 </Grid>
               </Modal.Content>
             </Modal>
+            
 
           </div>
         </div>
