@@ -32,7 +32,10 @@ const Signup = () => {
             }
 
             const data = await response.json();
-            console.log("Success:", data);
+            alert("Account creation success!");
+            setFormData({email: "",
+            password: "",
+            password_confirmation: ""});
             // Handle successful response
         } catch (error) {
             console.error("Error:", error);

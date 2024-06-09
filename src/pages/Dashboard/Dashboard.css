@@ -36,6 +36,7 @@
   grid-area: sbar;
   background-color: #83c0d8;
   border-radius: 10px;
+  overflow: auto;
 }
 .header-wrapper {
   grid-area: header;

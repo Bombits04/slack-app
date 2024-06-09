@@ -40,14 +40,14 @@ getMessage: async function (user, channelId, recClass, setChannelMessages, setMe
       const res = await axios.post(`${API_URL}/messages`, request, { headers });
       const { data } = res;
 
-      if (data) {
-       console.log(data.data);
+      if (data.errors) {
+        alert(data.errors);
       }else{
-        alert("Message not sent")
+        //do nothing
       }
         
      }catch (error) {
-        return alert(error.res.data.errors);
+        return alert(error);
       }
       setInputMessage("");
 },

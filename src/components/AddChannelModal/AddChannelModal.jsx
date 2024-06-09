@@ -14,16 +14,11 @@ function AddChannelModal(props) {
 
   // const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
-  async function handleClose(){
-
-     await ChannelService.addChannel(user, setAddNewChannelFlag, newChannelName, memberIds);
-    // console.log(channelz)
-    // setAddNewChannelFlag(true);
+  async function addChannel(){
+    await ChannelService.addChannel(user, setAddNewChannelFlag, newChannelName, memberIds);
     setShow(false);
-  }
-  function addChannel(){
-
   }
 
   return (
@@ -68,7 +63,7 @@ function AddChannelModal(props) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={addChannel}>
             Create Channel
           </Button>
         </Modal.Footer>

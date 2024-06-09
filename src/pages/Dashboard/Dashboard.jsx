@@ -7,6 +7,7 @@ import MessageService from "../../services/MessageService";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import ModalAddChannel from "../../components/AddChannelModal/AddChannelModal";
 import appLogo from "../../assets/images/app_logo.png";
+import AddDirectMsgModal from "../../components/AddDirectMsgModal/AddDirectMsgModal";
 
 function Dashboard(props) {
   const { loggedin, setIsLoggedIn } = props;
@@ -21,12 +22,12 @@ function Dashboard(props) {
   const [chatId, setChatId] = useState(0);
   const [getMsgFlag, setGetMsgFlag] = useState(true);
   const [directMessages, setDirectMessages] = useState([]);
-  const [getDirectMessagesFlag, setDirectMessagesFlag] = useState(true);
+  // const [getDirectMessagesFlag, setDirectMessagesFlag] = useState(true);
   const [getDirectMessageUsers, setDirectMessageUsers] = useState([]);
   const [recClass, setRecClass] = useState();
   const [addNewChannelFlag, setAddNewChannelFlag] = useState();
   const [isReloadChannelList, setIsReloadChannelList] = useState(false);
-  const [inputMessage, setInputMessage] = useState();
+  const [inputMessage, setInputMessage] = useState("");
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
@@ -70,8 +71,8 @@ function Dashboard(props) {
         const dirMsgs = await UserService.getDirectMessages(
           user,
           userList,
-          setDirectMessages,
-          setDirectMessagesFlag,
+          // setDirectMessages,
+          // setDirectMessagesFlag,
           setDirectMessageUsers
         );
       }
@@ -102,19 +103,34 @@ function Dashboard(props) {
     setIsLoggedIn(false);
   }
 
-  function handleChangeChannel(id, recClass) {
+  function handleChangeChannel(id, recClass, userType) {
     if (id && recClass === "Channel") {
       const retVal = channelList.find((ret) => ret.id === id);
       setHeaderName(retVal.name);
     }
 
     if (id && recClass === "User") {
-      console.log(getDirectMessageUsers);
-      // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
-      const retValtemp = getDirectMessageUsers.filter((fltr) => fltr !== null);
-      const retVal = retValtemp.find((ret) => ret.recId === id);
-      // console.log(retVal);
-      setHeaderName(retVal.recUid);
+      if (userType === "receiver") {
+        // console.log(getDirectMessageUsers);
+        // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
+        const retValtemp = getDirectMessageUsers.filter(
+          (fltr) => fltr !== null
+        );
+        const retVal = retValtemp.find((ret) => ret.recId === id);
+        console.log(retVal);
+        setHeaderName(retVal.recUid);
+      }
+
+      if (userType === "sender") {
+         // console.log(getDirectMessageUsers);
+        // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
+        const retValtemp2 = getDirectMessageUsers.filter(
+          (fltr) => fltr !== null
+        );
+        const retVal2 = retValtemp2.find((ret) => ret.sendId === id);
+        console.log(retVal2);
+        setHeaderName(retVal2.sendUid);
+      }
     }
     setChatId(id);
     setRecClass(recClass);
@@ -201,41 +217,74 @@ function Dashboard(props) {
           </div>
           <div className="direct-message-header">
             <span>Direct Messages</span>
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18px"
               viewBox="0 0 640 512"
             >
               <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-            </svg>
+            </svg> */}
+
+            <AddDirectMsgModal
+              userList={userList}
+              setDirectMessageUsers={setDirectMessageUsers}
+            ></AddDirectMsgModal>
           </div>
           <div className="directmsg-list">
+            {console.log(getDirectMessageUsers)}
             {getDirectMessageUsers &&
               getDirectMessageUsers?.toSorted().map((ids) => {
-                if (ids !== null && ids.recId !== user.id) {
-                  return (
-                    <div className="direct-message-container">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="8px"
-                        viewBox="0 0 384 512"
-                      >
-                        <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
-                      </svg>
-                      <span
-                        key={ids.recId}
-                        onClick={() => handleChangeChannel(ids.recId, "User")}
-                      >
-                        {ids.recUid}
-                      </span>
-                    </div>
-                  );
+                // && ids.recId !== user.id
+                if (ids !== null) {
+                  // (ids.recId = user.id && ids.sendId !== user.id && ids !== null)
+                  if (ids.recId != user.id) {
+                    return (
+                      <div className="direct-message-container">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="8px"
+                          viewBox="0 0 384 512"
+                        >
+                          <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                        </svg>
+                        <span
+                          key={ids.recId}
+                          onClick={() =>
+                            handleChangeChannel(ids.recId, "User", "receiver")
+                          }
+                        >
+                          {ids.recUid}
+                        </span>
+                      </div>
+                    );
+                  }
+                  if (ids.recId === user.id && ids.sendId !== user.id) {
+                    return (
+                      <div className="direct-message-container">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="8px"
+                          viewBox="0 0 384 512"
+                        >
+                          <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                        </svg>
+                        <span
+                          key={ids.sendId}
+                          onClick={() =>
+                            handleChangeChannel(ids.sendId, "User", "sender")
+                          }
+                        >
+                          {ids.sendUid}
+                        </span>
+                      </div>
+                    );
+                  }
                 }
               })}
 
-            {/* {!getDirectMessageUsers && 
-                <span style={{ cursor: "default" }}>No direct messages</span>
-              } */}
+            {getDirectMessageUsers.length === 0 && (
+              <span style={{ cursor: "default" }}>No direct messages</span>
+            )}
           </div>
         </div>
 

@@ -58,37 +58,28 @@ const ChannelService = {
         expiry: user.expiry,
         uid: user.uid,
       };
-
-      const request = {
+      
+      const params = {
         name: newChannelName,
-        user_ids: memberIds,
+        user_ids: [memberIds],
       };
 
-      const res = await axios.post(`${API_URL}/channels`, request, { headers });
+      const res = await axios.post(`${API_URL}/channels`, params, { headers });
       const { data } = res;
-
-      // console.log(data.data)
-      // console.log(data)
+      
       if (res.status === 200 || res.status === 201) {
         if (data.errors) {
-          alert("tae" + data.errors);
-          setAddNewChannelFlag(true);
+          alert(data.errors);
         } else {
-          setAddNewChannelFlag(true)
           alert("Channel created successfully!");
         }
-
-        // console.log(data.data)
-        // setAddNewChannelFlag(true);
       } else {
-        setAddNewChannelFlag(true)
         alert("Errors were encountered :(");
       }
     } catch (error) {
-      console.log("tae" + error);
-      setAddNewChannelFlag(true)
-      alert("Errorz 500: Internal server error");
+      alert(error.message);
     }
+    setAddNewChannelFlag(true)
   },
 };
 

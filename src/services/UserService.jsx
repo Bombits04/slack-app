@@ -25,27 +25,24 @@ const UserService = {
   getDirectMessages: async function (
     user,
     userList,
-    setDirectMessages,
-    setDirectMessagesFlag,
+    // setDirectMessages,
+    // setDirectMessagesFlag,
     setDirectMessageUsers
   ) {
-  async function getData(){
-
-  }
+    async function getData() {}
 
     try {
       // console.log("test2")
-      setDirectMessages([])
-      setDirectMessageUsers([])
+      // setDirectMessages([])
+      setDirectMessageUsers([]);
       const headers = {
         "access-token": user.accessToken,
         expire: user.expiry,
         client: user.client,
         uid: user.uid,
       };
-      
+
       userList.map(async (user) => {
-        
         const params = `?receiver_id=${user.id}&receiver_class=User`;
         const res = await axios.get(`${API_URL}/messages${params}`, {
           headers,
@@ -54,31 +51,41 @@ const UserService = {
         var temp = [];
         var recIdTemp = [];
         if (data) {
-         
           var count = 0;
-          await data.data?.map(async (usrid) => {
-            
+          data.data?.map((usrid) => {
             //check for duplicate message ids
             // const isFound = temp.find((id1) => id1 === usrid.id);
-              // setDirectMessages((oldLis) => [...oldLis, oldLis.some((data) => JSON.stringify(data) === JSON.stringify(usrid))? null : usrid]);
-              const messangerDetails = {
-                recId: usrid.receiver.id,
-                recUid: usrid.receiver.uid
-              }
-              // oldList.some((id) => JSON.stringify(id) === JSON.stringify(messangerDetails))? null : messangerDetails]
-              // let temp = [messangerDetails]
-              setDirectMessageUsers((oldList) => [...oldList, oldList.some((id) => JSON.stringify(id) === JSON.stringify(messangerDetails))? null : messangerDetails])
-              // console.log(temp)
-              // console.log(temp.some((id) => id == messangerDetails));
+            // setDirectMessages((oldLis) => [...oldLis, oldLis.some((data) => JSON.stringify(data) === JSON.stringify(usrid))? null : usrid]);
+            const messangerDetails = {
+              // msgId: usrid.id,
+              recId: usrid.receiver.id,
+              recUid: usrid.receiver.uid,
+              sendId: usrid.sender.id,
+              sendUid: usrid.sender.uid,
+            };
+            // oldList.some((id) => JSON.stringify(id) === JSON.stringify(messangerDetails))? null : messangerDetails]
+            // let temp = [messangerDetails]
+            // setDirectMessageUsers((oldList) => [...oldList, messangerDetails]);
+            // console.log(temp)
+            // console.log(temp.some((id) => id == messangerDetails));
+
+            setDirectMessageUsers((oldList) => [
+              ...oldList,
+              oldList.some(
+                (id) => JSON.stringify(id) === JSON.stringify(messangerDetails)
+              )
+                ? null
+                : messangerDetails,
+            ]);
           });
         }
       });
       //
-      setDirectMessagesFlag(false)
+      // setDirectMessagesFlag(false)
     } catch (err) {
       alert(err);
     }
-   },
+  },
 };
 
 export default UserService;
