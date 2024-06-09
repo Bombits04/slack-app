@@ -161,7 +161,7 @@ function Dashboard(props) {
     return (
       <div className="dashboard-container">
         <div className="header-wrapper">
-        <span className="header caveat-700">
+          <span className="header caveat-700">
             <img src={logo} width="40px" alt="App Logo" /> Slackerino
           </span>
           <span className="logout">
