@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import Signup from "../src/pages/signup/signup";
 import Error404 from "../src/pages/Error404/Error404";
 import Welcome from "../src/pages/Welcome/Welcome";
+import LoaderPage from './pages/LoaderPage/LoaderPage';
 import "semantic-ui-css/semantic.min.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route  path="/signup" Component={Signup} />
         <Route  path="/dashboard" element={<Dashboard loggedin={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route  path="/welcome" Component={Welcome} />
+        <Route  path="/redirect" Component={LoaderPage} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>

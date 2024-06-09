@@ -55,7 +55,7 @@ const Welcome = () => {
                                 }, 1000);
                                 setTimeout(() => {
                                     navigate("/dashboard");
-                                }, 2000);
+                                }, 7000);
                             }}>
                                 Launch Slackerino
                             </button>
