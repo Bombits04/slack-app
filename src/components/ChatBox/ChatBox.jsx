@@ -1,6 +1,7 @@
 import MessageService from "../../services/MessageService";
 import { useEffect, useState } from "react";
 
+
 function ChatBox(props) {
   const { user, chatId, recClass, getMsgFlag, setGetMsgFlag } = props;
 
