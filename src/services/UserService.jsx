@@ -4,7 +4,6 @@ import axios from "axios";
 const UserService = {
   getUsers: async function (user) {
     try {
-      // console.log("i am in getUsers");
       const headers = {
         "access-token": user.accessToken,
         expire: user.expiry,
@@ -22,19 +21,8 @@ const UserService = {
     }
   },
 
-  getDirectMessages: async function (
-    user,
-    userList,
-    // setDirectMessages,
-    // setDirectMessagesFlag,
-    setDirectMessageUsers
-  ) {
-    async function getData() {}
-
+  getDirectMessages: async function (user, userList, setDirectMessageUsers) {
     try {
-      // console.log("test2")
-      // setDirectMessages([])
-      setDirectMessageUsers([]);
       const headers = {
         "access-token": user.accessToken,
         expire: user.expiry,
@@ -48,40 +36,13 @@ const UserService = {
           headers,
         });
         const { data } = res;
-        var temp = [];
-        var recIdTemp = [];
-        if (data) {
-          var count = 0;
-          data.data?.map((usrid) => {
-            //check for duplicate message ids
-            // const isFound = temp.find((id1) => id1 === usrid.id);
-            // setDirectMessages((oldLis) => [...oldLis, oldLis.some((data) => JSON.stringify(data) === JSON.stringify(usrid))? null : usrid]);
-            const messangerDetails = {
-              // msgId: usrid.id,
-              recId: usrid.receiver.id,
-              recUid: usrid.receiver.uid,
-              sendId: usrid.sender.id,
-              sendUid: usrid.sender.uid,
-            };
-            // oldList.some((id) => JSON.stringify(id) === JSON.stringify(messangerDetails))? null : messangerDetails]
-            // let temp = [messangerDetails]
-            // setDirectMessageUsers((oldList) => [...oldList, messangerDetails]);
-            // console.log(temp)
-            // console.log(temp.some((id) => id == messangerDetails));
-
-            setDirectMessageUsers((oldList) => [
-              ...oldList,
-              oldList.some(
-                (id) => JSON.stringify(id) === JSON.stringify(messangerDetails)
-              )
-                ? null
-                : messangerDetails,
-            ]);
-          });
+        if (data.data.length !== 0) {
+          setDirectMessageUsers((a) => [
+            ...a,
+            a.find((chk) => chk === user.id) ? null : user.id,
+          ]);
         }
       });
-      //
-      // setDirectMessagesFlag(false)
     } catch (err) {
       alert(err);
     }

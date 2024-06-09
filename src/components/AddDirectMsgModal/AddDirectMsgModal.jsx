@@ -11,7 +11,7 @@ function AddDirectMsgModal(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  
   function addDirectMessage(){
     let userId = 0;
     let userEmail = "" 
