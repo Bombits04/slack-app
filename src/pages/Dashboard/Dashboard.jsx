@@ -242,7 +242,7 @@ function Dashboard(props) {
           </div>
 
           <div className="menu-icons">
-          <Icon name="user" size="large" onClick={() => navigate("/profile")} />
+          <Icon name="user" size="large" onClick={() => navigate("/welcome")} />
           <Icon name="dashboard" size="large" onClick={() => {
                   setTimeout(() => {
                     navigate("/redirect");
@@ -310,7 +310,7 @@ function Dashboard(props) {
             )}
           </div>
           <div className="direct-message-header">
-            <span>Direct Messages</span>
+            {/* <span>Direct Messages</span> */}
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18px"
@@ -373,7 +373,7 @@ function Dashboard(props) {
               onChange={(e) => setInputMessage(e.target.value)}
             />
             
-            <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white", padding: "10px 20px"}}>
+            <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white", }}>
                 
               <i class="smile outline icon"></i>
             </Button>
