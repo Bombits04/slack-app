@@ -6,7 +6,7 @@ import "./ChatBox.css";
 function ChatBox(props) {
   const { user, chatId, recClass, getMsgFlag, setGetMsgFlag } = props;
 
-  const [channelMessages, setChannelMessages] = useState([]);
+  const [channelMessages, setChannelMessages] = useState();
 
   useEffect(() => {
     async function fetchMessages() {
@@ -45,7 +45,7 @@ function ChatBox(props) {
 
   return (
     <div className="chatbox">
-      {channelMessages.map((msg) => (
+      {channelMessages && channelMessages.map((msg) => (
         <div className={user.id === msg.sender.id ? "sender" : "receiver"} key={msg.id}>
           <div className="chat-bubble">
             <i>{msg.sender.email}</i>: {msg.body}
