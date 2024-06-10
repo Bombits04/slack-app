@@ -3,7 +3,7 @@ import axios from "axios";
 
 const MessageService = {
 
-getMessage: async function (user, channelId, recClass, setChannelMessages, setMessage) {
+getMessage: async function (user, channelId, recClass, setChannelMessages) {
     //FOR DEBUGGING
     // console.log(user);
     // console.log(channelId);
@@ -21,6 +21,7 @@ getMessage: async function (user, channelId, recClass, setChannelMessages, setMe
       const { data } = res;
 
       if (data) {
+        console.log(channelId)
         setChannelMessages(data.data);
       }
     } catch (error) {

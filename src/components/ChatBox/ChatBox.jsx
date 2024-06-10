@@ -22,6 +22,7 @@ function ChatBox(props) {
       fetchMessages();
       setGetMsgFlag(false);
     }
+    
   }, [chatId, recClass, getMsgFlag]);
 
   const handleReaction = (msgId, emoji) => {
@@ -42,7 +43,7 @@ function ChatBox(props) {
       })
     );
   };
-
+ console.log(channelMessages);
   return (
     <div className="chatbox">
       {channelMessages && channelMessages.map((msg) => (

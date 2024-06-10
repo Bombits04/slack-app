@@ -8,7 +8,7 @@ const ChannelService = {
     setHeaderName,
     setChatId,
     setFetchChannelFlag,
-    setIsReloadChannelList,
+    setGetMsgFlag,
     isReloadChannelList,
     setAddNewChannelFlag
   ) {
