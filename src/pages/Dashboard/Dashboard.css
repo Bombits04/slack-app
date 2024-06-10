@@ -82,7 +82,7 @@
 .chat-box {
   height: 65%;
   background-color: black;
-  margin: 20px;
+  margin: 0 20px 20px 20px;
   padding: 8px;
   box-shadow: inset 0px 0px 23px -2px rgb(67, 67, 67);
   border: 1px solid rgb(67, 67, 67);
@@ -307,4 +307,13 @@ textarea {
 
 .search-container div {
   padding: 3px 0;
+}
+.header-container{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+.header-container svg{
+  margin-right: 15px;
+  cursor: pointer;
 }
