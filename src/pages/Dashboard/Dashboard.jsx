@@ -1,16 +1,20 @@
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import UserService from "../../services/UserService";
 import ChannelService from "../../services/ChannelService";
 import MessageService from "../../services/MessageService";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import ModalAddChannel from "../../components/AddChannelModal/AddChannelModal";
 import logo from "../../assets/images/app_logo.png";
-import { Button, Modal, Icon, Grid } from "semantic-ui-react";
+import { Button, Modal, Icon, Grid, Input } from "semantic-ui-react";
 import AddDirectMsgModal from "../../components/AddDirectMsgModal/AddDirectMsgModal";
 
 function Dashboard(props) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const searchRef = useRef(null);
+
   const { loggedin, setIsLoggedIn } = props;
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -28,6 +32,7 @@ function Dashboard(props) {
   const [isReloadChannelList, setIsReloadChannelList] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [emojiModalOpen, setEmojiModalOpen] = useState(false);
+  const [filteredUserList, setFilteredUserList] = useState([]);
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
@@ -100,6 +105,51 @@ function Dashboard(props) {
     refreshChannels();
   }, [addNewChannelFlag]);
 
+  
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredUserList([]);
+      return;
+    }
+
+    const filteredList = userList.filter((user) => {
+      return user.uid.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setFilteredUserList(filteredList);
+    console.log(filteredList);
+  }, [searchTerm, userList]);
+
+  const handleChangeSearch = (event) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+  };
+
+  function setChangeSearchedUser(user) {
+    setHeaderName(user.uid);
+    setChatId(user.id);
+    // // setRecClass(recClass);
+    setGetMsgFlag(true);
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleFocus = () => {
+    setIsSearchVisible(true);
+  };
+
   function logout() {
     localStorage.clear();
     setIsLoggedIn(false);
@@ -149,6 +199,33 @@ function Dashboard(props) {
           <span className="header caveat-700">
             <img src={logo} width="40px" alt="App Logo" /> Slackerino
           </span>
+          <div ref={searchRef}>
+            <section className="search-bar">
+              <Input
+                icon="search"
+                iconPosition="left"
+                placeholder="Search a user here ..."
+                onChange={handleChangeSearch}
+                value={searchTerm}
+                onFocus={handleFocus}
+                className="custom-search-input"
+              />
+              {isSearchVisible && (
+                <div className="search-container">
+                  {filteredUserList.length > 0
+                    ? filteredUserList.map((user) => (
+                        <div key={user.id}>
+                          <button onClick={() => setChangeSearchedUser(user)}>
+                            <p>{user.id}: {user.uid}</p>
+                          </button>
+                        </div>
+                      ))
+                    : searchTerm && <p>No users found</p>}
+                </div>
+              )}
+            </section>
+          </div>
+
           <div className="menu-icons">
           <Icon name="user" size="large" onClick={() => navigate("/profile")} />
           <Icon name="dashboard" size="large" onClick={() => {
@@ -263,19 +340,17 @@ function Dashboard(props) {
               onChange={(e) => setInputMessage(e.target.value)}
             />
             
-            <Button
-              icon
-              onClick={() => setEmojiModalOpen(true)}
-              style={{ backgroundColor: "white", color: "black" }}>
+            <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white", padding: "10px 20px"}}>
+                
               <i class="smile outline icon"></i>
             </Button>
-            <Button icon>
+            <Button icon style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }} >
               <Icon name="file outline" />
             </Button>
-            <Button icon>
+            <Button icon style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }}>
               <Icon name="camera" />
             </Button>
-            <Button icon onClick={() => sendMessage(chatId, recClass)}>
+            <Button icon onClick={() => sendMessage(chatId, recClass)} style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }}>
               Send
             </Button>
             

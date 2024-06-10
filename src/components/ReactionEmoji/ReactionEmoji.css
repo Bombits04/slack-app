@@ -1,0 +1,21 @@
+.reaction-emojis {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+  }
+  
+  .emoji {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.2s;
+  }
+  
+  .emoji:hover {
+    transform: scale(1.2);
+  }
+  
+  .reaction {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  

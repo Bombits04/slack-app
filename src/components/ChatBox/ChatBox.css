@@ -3,28 +3,61 @@
     flex-direction: column;
   }
   
+  .message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 60%;
+  }
+  
   .sender, .receiver {
     display: flex;
-    margin: 10px 0;
+    margin: 10px 10px;
   }
   
   .sender .chat-bubble {
-    background-color: rgb(68, 74, 74);
+    background-color: teal;
     align-self: flex-end;
     text-align: right;
     padding: 10px;
     border-radius: 10px;
     max-width: 60%;
     margin-left: auto;
+    font-size: 18px;
   }
   
   .receiver .chat-bubble {
-    background-color: teal;
+    background-color: rgb(68, 74, 74);
     align-self: flex-start;
     text-align: left;
     padding: 10px;
     border-radius: 10px;
     max-width: 60%;
     margin-right: auto;
+    font-size: 18px;
+  }
+
+  .reaction {
+    display: inline-block;
+    margin-left: 2px;
   }
   
+  .chat-bubble p {
+    font-size: 12px;
+  }
+  
+  .reaction-emojis {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .emoji {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.2s;
+  }
+  
+  .emoji:hover {
+    transform: scale(1.2);
+  }
