@@ -32,6 +32,8 @@
   grid-template-rows: 60px repeat(4, 1fr);
   grid-template-columns: 350px;
   grid-gap: 10px;
+  color: black;
+  font-size: 16px;
 }
 
 .sbar-wrapper {
@@ -102,7 +104,7 @@
   margin: 20px;
   padding: 10px;
   background-color: black;
-  border: .5px solid rgb(35, 35, 35);
+  border: 1px solid rgb(67, 67, 67);
   /* box-shadow: inset 0px 0px 23px -2px rgb(67, 67, 67); */
   border-radius: 5px;
   white-space: pre-wrap;
@@ -161,7 +163,7 @@ textarea {
   cursor: pointer;
 }
 .app-title{
-  color: rgb(4, 1, 42);
+  color: rgb(251, 251, 251);
   display: inline-block;
   font-size: 3rem;
   margin-top: 15px;

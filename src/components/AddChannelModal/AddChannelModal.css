@@ -1,0 +1,12 @@
+.channel-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .channel-header span {
+    font-size: 2.3rem;
+    color: white;
+  }
+  

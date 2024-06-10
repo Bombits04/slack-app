@@ -42,7 +42,7 @@ const Welcome = () => {
           <img src={appLogo} width="40px" alt="App Logo" /> Slackerino
         </span>
         <div className="menu-icons">
-          <Icon name="user" size="large" onClick={() => navigate("/profile")} />
+          <Icon name="user" size="large" onClick={() => navigate("/welcome")} />
           <Icon name="dashboard" size="large" onClick={() => {
             setTimeout(() => {
               navigate("/redirect");

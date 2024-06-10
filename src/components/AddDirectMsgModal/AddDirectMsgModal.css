@@ -1,0 +1,17 @@
+  .direct-message-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .direct-message-header span {
+    font-size: 2.3rem;
+    color: white;
+  }
+  
+  .white-icon {
+    color: white !important; /* Ensures the icon color is white */
+    cursor: pointer;
+  }
+  

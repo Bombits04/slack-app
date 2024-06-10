@@ -232,30 +232,18 @@ function Dashboard(props) {
           </div>
 
           <div className="menu-icons">
-            <Icon
-              name="user"
-              size="large"
-              onClick={() => navigate("/profile")}
-            />
-            <Icon
-              name="dashboard"
-              size="large"
-              onClick={() => {
-                setTimeout(() => {
-                  navigate("/redirect");
-                }, 1000);
-                setTimeout(() => {
-                  navigate("/dashboard");
-                }, 7000);
-              }}
-            />
-            <Icon
-              name="setting"
-              size="large"
-              onClick={() => navigate("/settings")}
-            />
-            <Icon name="sign-out" size="large" onClick={logout} />
-          </div>
+          <Icon name="user" size="large" onClick={() => navigate("/welcome")} />
+          <Icon name="dashboard" size="large" onClick={() => {
+                  setTimeout(() => {
+                    navigate("/redirect");
+                  }, 1000);
+                  setTimeout(() => {
+                    navigate("/dashboard");
+                  }, 7000);
+                }} />
+          <Icon name="setting" size="large" onClick={() => navigate("/settings")} />
+          <Icon name="sign-out" size="large" onClick={logout} />
+        </div>
         </div>
         <div className="sbar-wrapper">
           <div className="app-title">Dashboard</div>
@@ -302,7 +290,15 @@ function Dashboard(props) {
             )}
           </div>
           <div className="direct-message-header">
-            <span>Direct Messages</span>
+            {/* <span>Direct Messages</span> */}
+            {/* <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18px"
+              viewBox="0 0 640 512"
+            >
+              <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+            </svg> */}
+
             <AddDirectMsgModal
               userList={userList}
               setDirectMessageUsers={setDirectMessageUsers}
@@ -359,16 +355,9 @@ function Dashboard(props) {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
             />
-
-            <Button
-              icon
-              onClick={() => setEmojiModalOpen(true)}
-              style={{
-                backgroundColor: "teal",
-                color: "white",
-                padding: "10px 20px",
-              }}
-            >
+            
+            <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white", }}>
+                
               <i class="smile outline icon"></i>
             </Button>
             <Button
