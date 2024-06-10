@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Grid, Header, Icon } from "semantic-ui-react";
 import appLogo from "../../assets/images/app_logo.png";
 import man from "../../assets/images/man.png";
 import bubble from "../../assets/images/chatbubble.gif";
 import "./Welcome.css";
 import { useNavigate } from "react-router-dom";
+import UserService from "../../services/UserService";
 
 const Welcome = () => {
+  const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && userList.length === 0) {
+      async function fetchUsers() {
+        const users = await UserService.getUsers(user);
+        setUserList(users);
+      }
+      fetchUsers();
+    }
+  }, [userList]);
 
   const handleSignOut = () => {
     localStorage.clear();
@@ -19,6 +32,9 @@ const Welcome = () => {
     navigate("/signup");
   };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userEmail = user ? user.uid : "";
+
   return (
     <div className="welcome-page">
       <div className="header-wrapper">
@@ -28,13 +44,13 @@ const Welcome = () => {
         <div className="menu-icons">
           <Icon name="user" size="large" onClick={() => navigate("/profile")} />
           <Icon name="dashboard" size="large" onClick={() => {
-                  setTimeout(() => {
-                    navigate("/redirect");
-                  }, 1000);
-                  setTimeout(() => {
-                    navigate("/dashboard");
-                  }, 7000);
-                }} />
+            setTimeout(() => {
+              navigate("/redirect");
+            }, 1000);
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 7000);
+          }} />
           <Icon name="setting" size="large" onClick={() => navigate("/settings")} />
           <Icon name="sign-out" size="large" onClick={handleSignOut} />
         </div>
@@ -52,7 +68,7 @@ const Welcome = () => {
           <Container className="white-background flex-container">
             <p className="larger-text">
               <img src={bubble} width="250px" alt="Chat GIF" />
-              Welcome back! Go to dashboard.
+              Welcome back{userEmail && `, ${userEmail}`}!
               <button
                 type="button"
                 className="modern-button2"
