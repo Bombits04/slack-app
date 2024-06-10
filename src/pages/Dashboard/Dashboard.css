@@ -169,31 +169,17 @@ textarea {
   margin-left: 10px;
 }
 .chatbox {
-  /* display: grid; */
-  /* overflow-anchor: none; */
-  margin: 5px;
+  margin: 2px;
   background-color: black;
   height: 98%;
   overflow: auto;
   border-radius: 3px;
 }
-.receiver{
-  /* display: block; */
-  display: flex;
-  /* overflow-anchor: auto; */
-  width: 100%;
-  justify-content: end;
-}
-.sender{
-  /* overflow-anchor: auto; */
-  width: 100%;
-  
-}
 
 .chat-bubble{
   background-color: teal;
   color: #fff;
-  margin: 10px 5px 10px 5px;
+  margin: 0;
   padding: 15px;
   width: fit-content;
   border-radius: 50px; 
@@ -252,4 +238,72 @@ textarea {
 
 .menu-icons .icon:hover {
   color: #ddd;
+}
+
+.search-bar {
+  position: relative;
+  margin-top: 10px;
+}
+
+.custom-search-input input {
+  border: none;
+}
+
+.custom-search-input .icon {
+  color: teal;
+}
+
+.search-bar .ui.input input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid teal;
+  color: teal;
+  outline: none;
+  width: 100%;
+  padding: 10px;
+  box-shadow: none;
+}
+
+.search-bar .ui.input input:focus {
+  border-bottom-color: darkcyan;
+}
+
+.search-bar .ui.input {
+  width: 150%;
+}
+
+
+.search-container {
+  position: absolute;
+  background-color: teal;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  width: 150%;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.search-container p {
+  border: none;
+  margin: auto;
+  padding: 5px;
+  font-size: 14px;
+  color: white;
+}
+
+.search-container button {
+  background: teal;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.search-container button:hover {
+  background-color: rgb(0, 0, 0);
+}
+
+.search-container div {
+  padding: 3px 0;
 }

@@ -9,7 +9,7 @@
   }
   
   .sender .chat-bubble {
-    background-color: rgb(68, 74, 74);
+    background-color: teal;
     align-self: flex-end;
     text-align: right;
     padding: 10px;
@@ -19,7 +19,7 @@
   }
   
   .receiver .chat-bubble {
-    background-color: teal;
+    background-color: rgb(68, 74, 74);
     align-self: flex-start;
     text-align: left;
     padding: 10px;
