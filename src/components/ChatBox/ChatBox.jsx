@@ -22,11 +22,13 @@ function ChatBox(props) {
       fetchMessages();
       setGetMsgFlag(false);
     }
+    
   }, [chatId, recClass, getMsgFlag]);
-
+ console.log(channelMessages);
   return (
     <div className="chatbox">
       {channelMessages?.map((msg) => {
+        console.log("rendering chatbox" + chatId)
         if (user.id === msg.sender.id) {
           return (
             <div className="sender" key={msg.id}>
