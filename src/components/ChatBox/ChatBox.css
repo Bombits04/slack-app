@@ -3,9 +3,16 @@
     flex-direction: column;
   }
   
+  .message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 60%;
+  }
+  
   .sender, .receiver {
     display: flex;
-    margin: 10px 0;
+    margin: 10px 10px;
   }
   
   .sender .chat-bubble {
@@ -16,6 +23,7 @@
     border-radius: 10px;
     max-width: 60%;
     margin-left: auto;
+    font-size: 18px;
   }
   
   .receiver .chat-bubble {
@@ -26,5 +34,30 @@
     border-radius: 10px;
     max-width: 60%;
     margin-right: auto;
+    font-size: 18px;
+  }
+
+  .reaction {
+    display: inline-block;
+    margin-left: 2px;
   }
   
+  .chat-bubble p {
+    font-size: 12px;
+  }
+  
+  .reaction-emojis {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .emoji {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.2s;
+  }
+  
+  .emoji:hover {
+    transform: scale(1.2);
+  }

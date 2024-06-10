@@ -373,19 +373,17 @@ function Dashboard(props) {
               onChange={(e) => setInputMessage(e.target.value)}
             />
             
-            <Button
-              icon
-              onClick={() => setEmojiModalOpen(true)}
-              style={{ backgroundColor: "white", color: "black" }}>
+            <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white", padding: "10px 20px"}}>
+                
               <i class="smile outline icon"></i>
             </Button>
-            <Button icon>
+            <Button icon style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }} >
               <Icon name="file outline" />
             </Button>
-            <Button icon>
+            <Button icon style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }}>
               <Icon name="camera" />
             </Button>
-            <Button icon onClick={() => sendMessage(chatId, recClass)}>
+            <Button icon onClick={() => sendMessage(chatId, recClass)} style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }}>
               Send
             </Button>
             
