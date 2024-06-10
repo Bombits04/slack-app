@@ -1,5 +1,6 @@
 import MessageService from "../../services/MessageService";
 import { useEffect, useState } from "react";
+import "./ChatBox.css";
 
 
 function ChatBox(props) {

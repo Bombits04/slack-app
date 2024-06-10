@@ -1,0 +1,30 @@
+.chatbox {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sender, .receiver {
+    display: flex;
+    margin: 10px 0;
+  }
+  
+  .sender .chat-bubble {
+    background-color: rgb(68, 74, 74);
+    align-self: flex-end;
+    text-align: right;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 60%;
+    margin-left: auto;
+  }
+  
+  .receiver .chat-bubble {
+    background-color: teal;
+    align-self: flex-start;
+    text-align: left;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 60%;
+    margin-right: auto;
+  }
+  
