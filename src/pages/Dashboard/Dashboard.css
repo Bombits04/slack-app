@@ -68,6 +68,9 @@
   cursor: pointer;
   width: max-content;
 }
+.directmsg-list{
+  margin-bottom: 60px;
+}
 .chat-box {
   height: 65%;
   background-color: #83c0d8;
