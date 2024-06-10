@@ -18,7 +18,7 @@ function Login(props) {
     if (user) {
       setIsLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(user));
-      navigate("/dashboard");
+      navigate("/welcome");
       // console.log(user);
     }
   }, [user, navigate, setIsLoggedIn]);

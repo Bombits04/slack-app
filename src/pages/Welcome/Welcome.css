@@ -1,0 +1,154 @@
+.welcome-page {
+    position: relative;
+    height: 100vh;
+    background-color: black;
+}
+
+.caveat-700 {
+    font-weight: 400;
+}
+
+.header-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+    height: 60px;
+}
+
+.header-wrapper span {
+    cursor: pointer;
+}
+
+.appLogo {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    width: 100px;
+}
+
+.appName {
+    color: white;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.header-text {
+    color: white;
+}
+
+.white-background {
+    color: white;
+    background-color: black;
+    padding: 1px 20px;
+    border-radius: 10px;
+    border: 10px;
+    border-color: white;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+}
+.modern-button2 {
+    margin-left: 100px;
+    background-color: teal;
+    color: white;
+    border: 3;
+    border-radius: 10px;
+    border-color: white;
+    padding: 5px 10px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modern-button2:hover {
+    color: teal;
+    background-color:white;
+    transform: translateY(-2px);
+}
+
+
+.white-background1 {
+    color: white;
+    background-color: teal;
+    padding: 0px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.flex-container p {
+    margin: 0;
+    flex: 1;
+    font-size: 2em;
+}
+
+.modern-button {
+    margin-left: 50px;
+    background-color: teal;
+    color: white;
+    border: 3;
+    border-radius: 10px;
+    border-color: white;
+    padding: 5px 10px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modern-button:hover {
+    background-color: black;
+    transform: translateY(-2px);
+}
+  
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 10px 0;
+    
+  }
+  
+  .footer p {
+    color: #333;
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .menu-icons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .menu-icons .icon {
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .menu-icons .icon:hover {
+    color: #ddd;
+  }
+  

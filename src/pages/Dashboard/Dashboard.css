@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 .rubik-bold600 {
   font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
+  color: white;
 }
 .caveat-700 {
-  font-family: "Caveat", cursive;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
+  /* font-family: "Caveat", cursive;
+  font-optical-sizing: auto; */
+  font-weight: 400;
+  /* font-style: normal; */
 }
 .header-name{
   margin-left: 20px;
@@ -24,7 +26,7 @@
     "sbar   main   main   main"
     "sbar   main   main   main";
 
-  background-color: #5C3A58;
+  background-color: teal;
   height: 100svh;
   width: 100svw;
   grid-template-rows: 60px repeat(4, 1fr);
@@ -34,24 +36,30 @@
 
 .sbar-wrapper {
   grid-area: sbar;
-  background-color: #83c0d8;
+  background-color: teal;
   border-radius: 10px;
   overflow: auto;
 }
+
 .header-wrapper {
   grid-area: header;
   display: flex;
   flex-direction: row;
-  background-color: #83c0d8;
+  background-color: black;
   justify-content: space-between;
+  color: white;
+  height: 200px;
 }
 .header-wrapper span {
   cursor: pointer;
 }
 .main-wrapper {
   grid-area: main;
-  background-color: #83c0d8;
+  background-color: black;
   border-radius: 10px;
+  margin-top: 1px;
+  margin-right: 13px;
+  margin-bottom: 10px;
 }
 .channel-list, .directmsg-list  {
   display: flex;
@@ -73,11 +81,11 @@
 }
 .chat-box {
   height: 65%;
-  background-color: #83c0d8;
+  background-color: black;
   margin: 20px;
   padding: 8px;
-  box-shadow: inset 0px 0px 23px -2px rgba(0,0,0,0.6);
-  border: 1px solid black;
+  box-shadow: inset 0px 0px 23px -2px rgb(67, 67, 67);
+  border: 1px solid rgb(67, 67, 67);
   border-radius: 5px;
 }
 /* .chatbox {
@@ -93,14 +101,15 @@
   height: 20%;
   margin: 20px;
   padding: 10px;
-  background-color: #83c0d8;
-  border: 1px solid black;
-  box-shadow: inset 0px 0px 23px -2px rgba(0,0,0,0.6);
+  background-color: black;
+  border: 1px solid rgb(67, 67, 67);
+  box-shadow: inset 0px 0px 23px -2px rgb(67, 67, 67);
   border-radius: 5px;
   white-space: pre-wrap;
 }
 textarea {
   white-space: pre-wrap;
+  color: black;
   width: 100%;
   max-width: 100%;
   height: 80%;
@@ -110,6 +119,7 @@ textarea {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .channel-header{
+  color: white;
   margin-left: 10px;
   display: flex;
   gap: 10px;
@@ -129,6 +139,7 @@ textarea {
 }
 .channel-header span{
   font-size: 2rem;
+  /* color: white; channel header*/
 }
 .direct-message-header{
   margin-left: 10px;
@@ -139,6 +150,7 @@ textarea {
 }
 .direct-message-header span{
   font-size: 2rem;
+  color: white;
 }
 .direct-message-container{
   margin-left: 15px;
@@ -149,6 +161,7 @@ textarea {
   cursor: pointer;
 }
 .app-title{
+  color: rgb(4, 1, 42);
   display: inline-block;
   font-size: 3rem;
   margin-top: 15px;
@@ -159,7 +172,7 @@ textarea {
   /* display: grid; */
   /* overflow-anchor: none; */
   margin: 5px;
-  background-color: #ffffff;
+  background-color: black;
   height: 98%;
   overflow: auto;
   border-radius: 3px;
@@ -174,9 +187,11 @@ textarea {
 .sender{
   /* overflow-anchor: auto; */
   width: 100%;
+  
 }
+
 .chat-bubble{
-  background-color: #ec689f;
+  background-color: teal;
   color: #fff;
   margin: 10px 5px 10px 5px;
   padding: 15px;
@@ -186,9 +201,55 @@ textarea {
 .logout{
   margin-top: 10px;
   margin-right: 25px;
+  background-color: white;
 }
 
 .header{
   margin-left: 10px;
   font-size: 2.5rem;
+}
+
+.emoji {
+  cursor: pointer;
+  font-size: 24px;
+  margin: 5px;
+}
+
+.message-box-icons {
+  display: flex;
+  align-items: center;
+}
+
+.message-box-icons .ui.button {
+  margin-left: 5px;
+  color: white;
+}
+
+.message-box {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.message-box textarea {
+  flex-grow: 1;
+  height: 50px;
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+}
+
+.menu-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.menu-icons .icon {
+  color: #fff;
+  cursor: pointer;
+}
+
+.menu-icons .icon:hover {
+  color: #ddd;
 }
