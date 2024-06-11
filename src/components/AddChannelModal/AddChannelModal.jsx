@@ -45,13 +45,14 @@ function AddChannelModal(props) {
   return (
     <>
       <div>
-        <Icon
-          name="users"
-          size="large"
-          color="white"
-          onClick={handleShow}
-          style={{ cursor: "pointer" }}
-        />
+      <Icon
+        name="users"
+        size="large"
+        color="white"
+        onClick={handleShow}
+        style={{ cursor: "pointer"}}
+        data-testid="channel-icon" // Naglagay ako data-testid for test script
+      />
       </div>
 
       <Modal show={show} onHide={handleClose}>
