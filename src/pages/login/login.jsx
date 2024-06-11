@@ -3,6 +3,8 @@ import "./login.css";
 import { API_URL } from "../../constants/Constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Grid, Form, Segment, Header, Button, Icon } from "semantic-ui-react";
+import logo from "../../assets/images/app_logo.png";
 
 function Login(props) {
   const { setIsLoggedIn } = props;
@@ -60,40 +62,67 @@ function Login(props) {
     }
   }
   return (
-    <div className="login-container">
-      <div className="form-wrapper">
-        <span>
-          <h1>LOGIN</h1>
-        </span>
-        <form
-          action="submit"
-          className="login-form"
-          onSubmit={handleLoginSubmit}
-        >
-          <input
-            type="text"
-            placeholder="email"
-            id="loginEmail"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            id="loginPassword"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <div className="login-button">
-            <button type="submit">Login</button>
-            <button type="button" onClick={() => navigate("/signup")}>
-              Sign-up
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+                <Grid verticalAlign="middle" textAlign="center" style={{ height: '100vh', backgroundColor: 'black' }}>
+                <Grid.Column style={{ maxWidth: '450px' }}>
+                    <Header as="h1" className="login-header-text" style={{ color: 'white' }}>
+                        <img src={logo} alt="App Logo" className="logo" style={{ marginBottom: '20px' }} />
+                        Slackerino
+                    </Header>
+                    <br/>
+                    <p style={{ color: 'white' }} className="text1">Enter your email address</p>
+                    <p style={{ color: 'gray' }}>We suggest using the email address that you use at work.</p>
+                    <br />
+                    <br/>
+                    <Form onSubmit={handleLoginSubmit} className="login-form">
+                    <Segment stacked>
+                      <Form.Input
+                        fluid
+                        icon="user"
+                        iconPosition="left"
+                        placeholder="Email"
+                        type="email"
+                        id="loginEmail"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        required
+                      />
+                      <Form.Input
+                        fluid
+                        icon="lock"
+                        iconPosition="left"
+                        placeholder="Password"
+                        type="password"
+                        id="loginPassword"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        required
+                      />
+                      <Button type="submit" color="teal" fluid size="large">
+                        Login
+                      </Button>
+                      </Segment>
+                    </Form>
+                    <br />
+                    <p style={{ color: 'white' }}>---------------- OR ----------------</p>
+                    <Button fluid size="large" style={{ marginBottom: '10px', backgroundColor: 'white', color: 'black' }} className="google">
+                        <Icon name='google' className="google"/> Login with Google
+                    </Button>
+                    <Button fluid size="large" style={{ marginBottom: '20px', backgroundColor: 'white', color: 'black' }} className="apple">
+                        <Icon name='apple' className="apple"/> Login with Apple
+                    </Button>
+                    <div className="login-footer-text" style={{ color: 'white' }}>
+                        Not using Slackerino yet? <a href="/signup" style={{ color: 'teal' }}>Create an account.</a>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <div style={{ color: 'gray', marginTop: '20px' }}>
+                        <a href="" style={{ color: 'gray' }}>Privacy & terms</a> |
+                        <a href="" style={{ color: 'gray', marginLeft: '10px' }}>Contact us</a> |
+                        <a href="" style={{ color: 'gray', marginLeft: '10px' }}>Change region</a>
+                    </div>
+                </Grid.Column>
+            </Grid>
   );
 }
 

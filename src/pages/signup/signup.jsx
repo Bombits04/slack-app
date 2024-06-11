@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Grid, Form, Segment, Header, Button } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Grid, Form, Segment, Header, Button, Icon, Popup } from "semantic-ui-react";
+import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/images/app_logo.png";
 import './signup.css';
 
@@ -9,6 +10,8 @@ const Signup = () => {
         password: "",
         password_confirmation: ""
     });
+    const [popupOpen, setPopupOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -32,63 +35,94 @@ const Signup = () => {
             }
 
             const data = await response.json();
-            alert("Account creation success!");
-            setFormData({email: "",
-            password: "",
-            password_confirmation: ""});
-            // Handle successful response
+            console.log("Success:", data);
+            setPopupOpen(true);
         } catch (error) {
             console.error("Error:", error);
-            // Handle error
         }
     };
 
+    useEffect(() => {
+        if (popupOpen) {
+            const timer = setTimeout(() => {
+                setPopupOpen(false);
+                navigate('/');
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [popupOpen, navigate]);
+
     return (
-        <Grid verticalAlign="middle" textAlign="center" style={{ height: '100vh', backgroundColor: 'black' }}>
-            <Grid.Column style={{ maxWidth: '500px' }}>
-                <Header icon as="h2" className="header-text">
+        <div className={popupOpen ? 'blurred-background' : ''}>
+            <Grid verticalAlign="middle" textAlign="center" style={{ height: '100vh', backgroundColor: 'black' }}>
+                <Grid.Column style={{ maxWidth: '450px' }}>
+                    <Header as="h1" className="signup-header-text" style={{ color: 'white' }}>
+                        <img src={logo} alt="App Logo" className="logo" style={{ marginBottom: '20px' }} />
+                        Slackerino
+                    </Header>
+                    <p style={{ color: 'white' }} className="text1">First of all, enter your email address</p>
+                    <p style={{ color: 'gray' }}>We suggest using the email address that you use at work.</p>
                     <br />
-                    <img src={logo} alt="App Logo" className="logo" />
-                    <h1 className="header-text">Slackerino</h1>
-                </Header>
-                <Form className="form-segment" onSubmit={handleSubmit}>
-                    <Segment stacked>
-                        <Form.Input
-                            name="email"
-                            value={formData.email}
-                            icon="mail"
-                            iconPosition="left"
-                            onChange={handleInputChange}
-                            type="email"
-                            placeholder="Enter Email"
-                        />
-                        <Form.Input
-                            name="password"
-                            value={formData.password}
-                            icon="lock"
-                            iconPosition="left"
-                            onChange={handleInputChange}
-                            type="password"
-                            placeholder="Enter Password"
-                        />
-                        <Form.Input
-                            name="password_confirmation"
-                            value={formData.password_confirmation}
-                            icon="lock"
-                            iconPosition="left"
-                            onChange={handleInputChange}
-                            type="password"
-                            placeholder="Confirm Password"
-                        />
-                        <Button type="submit" color="teal" fluid size="large">  Sign Up</Button>
-                    </Segment>
-                </Form>
-                <div className="header-text">
-                    <br/>
-                    Already using Slackerino?   <a href="/" style={{ color: 'teal' }}>Sign in to an existing account.</a>
-                </div>
-            </Grid.Column>
-        </Grid>
+                    <Form onSubmit={handleSubmit}>
+                        <Segment stacked>
+                            <Form.Input
+                                name="email"
+                                value={formData.email}
+                                icon="mail"
+                                iconPosition="left"
+                                onChange={handleInputChange}
+                                type="email"
+                                placeholder="name@work-email.com"
+                                required
+                            />
+                            <Form.Input
+                                name="password"
+                                value={formData.password}
+                                icon="lock"
+                                iconPosition="left"
+                                onChange={handleInputChange}
+                                type="password"
+                                placeholder="Enter Password"
+                            />
+                            <Form.Input
+                                name="password_confirmation"
+                                value={formData.password_confirmation}
+                                icon="lock"
+                                iconPosition="left"
+                                onChange={handleInputChange}
+                                type="password"
+                                placeholder="Confirm Password"
+                            />
+                            <Button type="submit" color="teal" fluid size="large" className="signup-button">Sign Up</Button>
+                        </Segment>
+                    </Form>
+                    <br />
+                    <p style={{ color: 'white' }}>---------------- OR ----------------</p>
+                    <Button fluid size="large" style={{ marginBottom: '10px', backgroundColor: 'white', color: 'black' }} className="google">
+                        <Icon name='google' className="google"/> Sign Up with Google
+                    </Button>
+                    <Button fluid size="large" style={{ marginBottom: '20px', backgroundColor: 'white', color: 'black' }} className="apple">
+                        <Icon name='apple' className="apple"/> Sign Up with Apple
+                    </Button>
+                    <div className="signup-footer-text" style={{ color: 'white' }}>
+                        Already using Slackerino? <a href="/login" style={{ color: 'teal' }}>Sign in to an existing email.</a>
+                    </div>
+                    <br />
+                    <br />
+                    <div style={{ color: 'gray', marginTop: '20px' }}>
+                        <a href="" style={{ color: 'gray' }}>Privacy & terms</a> |
+                        <a href="" style={{ color: 'gray', marginLeft: '10px' }}>Contact us</a> |
+                        <a href="" style={{ color: 'gray', marginLeft: '10px' }}>Change region</a>
+                    </div>
+                </Grid.Column>
+            </Grid>
+            <Popup
+                content='Successfully logged in! Redirecting to login...'
+                open={popupOpen}
+                position='top center'
+                className='custom-popup'
+            />
+        </div>
     );
 };
 
