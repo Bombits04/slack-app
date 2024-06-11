@@ -277,6 +277,7 @@ function Dashboard(props) {
             <span>Channels</span>
             <ModalAddChannel
               user={user}
+              userList={userList}
               setAddNewChannelFlag={setAddNewChannelFlag}
             ></ModalAddChannel>
           </div>
@@ -410,7 +411,10 @@ function Dashboard(props) {
                 padding: "10px 20px",
                 className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
+                className: "chatbox-buttons",
+                transition: "background-color 0.3s ease",
               }}
+              className="chatbox-buttons-hovered"
               className="chatbox-buttons-hovered"
             >
               <Icon name="file outline" />
@@ -423,7 +427,10 @@ function Dashboard(props) {
                 padding: "10px 20px",
                 className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
+                className: "chatbox-buttons",
+                transition: "background-color 0.3s ease",
               }}
+              className="chatbox-buttons-hovered"
               className="chatbox-buttons-hovered"
             >
               <Icon name="camera" />
@@ -437,7 +444,10 @@ function Dashboard(props) {
                 padding: "10px 20px",
                 className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
+                className: "chatbox-buttons",
+                transition: "background-color 0.3s ease",
               }}
+              className="chatbox-buttons-hovered"
               className="chatbox-buttons-hovered"
             >
               Send
