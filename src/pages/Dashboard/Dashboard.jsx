@@ -262,9 +262,13 @@ function Dashboard(props) {
           </span> */}
         </div>
         <div className="sbar-wrapper">
-          <div className="app-title">Dashboard</div>
+          <div className="app-title">My Dashboard</div>
            {/* display nya yung currently logged in user */}
-            {/* <p className="loggedin">{user.uid}</p> */}
+            <div className="current-user-container">
+              <div className="current-user">
+                    <span>Logged in as:  {user.uid}</span>
+                </div>
+            </div>
           <div className="channel-header">
             <span>Channels</span>
             <ModalAddChannel

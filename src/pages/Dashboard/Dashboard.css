@@ -68,6 +68,13 @@
   flex-direction: column;
   margin-left: 15px;
 }
+
+.current-user {
+  display: flex;
+  flex-direction: column;
+  margin-left: -2px;
+}
+
 .channel-list span {
   font-weight: bold;
   cursor: pointer;
@@ -78,8 +85,17 @@
   cursor: pointer;
   width: max-content;
 }
+
+.current-user span {
+  font-weight: bold;
+  cursor: pointer;
+  width: max-content;
+}
 .directmsg-list{
   margin-bottom: 60px;
+}
+.current-user{
+  margin-bottom: 20px;
 }
 .chat-box {
   height: 65%;
@@ -136,6 +152,16 @@ textarea {
 .channel-container svg{
   cursor: pointer;
 }
+
+.current-user-container{
+  margin-left: 15px;
+  display: flex;
+  gap: 20px;
+}
+.current-user-container svg{
+  cursor: pointer;
+}
+
 .channel-header svg{
   cursor: pointer;
 }
@@ -163,12 +189,13 @@ textarea {
   cursor: pointer;
 }
 .app-title{
-  color: rgb(251, 251, 251);
+  color: rgb(0, 0, 0);
   display: inline-block;
   font-size: 3rem;
   margin-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   margin-left: 10px;
+  font-weight: bold;
 }
 .chatbox {
   margin: 2px;
