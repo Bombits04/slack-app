@@ -3,10 +3,6 @@ html, body {
     color: black;
 }
 
-.header-text {
-    color: white;
-}
-
 .logo {
     animation: rotate 5s linear infinite;
 }
@@ -19,3 +15,84 @@ html, body {
         transform: rotate(360deg);
     }
 }
+
+.signup-header-text {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .text1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    width: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .signup-form-segment {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  
+  .signup-button {
+    background-color: #2185d0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .signup-button:hover {
+    background-color: #1678c2;
+  }
+  
+  .google {
+    background-color: #db4437  !important;
+    color: white  !important;
+  }
+  
+  .google:hover {
+    background-color: #ba1f0a !important;
+  }
+  
+  .apple {
+    background-color: #333333  !important;
+    color: white  !important;
+  }
+  
+  .apple:hover {
+    background-color: rgb(22, 22, 22)  !important;
+  }
+  
+  .signup-header-text a {
+    color: teal;
+  }
+  
+  .signup-header-text a:hover {
+    color: #1678c2;
+  }
+
+  .signup-footer-text a {
+    color: teal;
+  }
+  
+  .signup-footer-text a:hover {
+    color: #1678c2;
+  }
+
+  /* Center the modal */
+.custom-modal1 .ui.modal {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Blur the background */
+  .blurred-background {
+    filter: blur(5px);
+  }

@@ -49,7 +49,7 @@ const Welcome = () => {
             }, 1000);
             setTimeout(() => {
               navigate("/dashboard");
-            }, 7000);
+            }, 10000);
           }} />
           <Icon name="setting" size="large" onClick={() => navigate("/settings")} />
           <Icon name="sign-out" size="large" onClick={handleSignOut} />
@@ -61,7 +61,6 @@ const Welcome = () => {
           <Header as="h1" className="header-text">
             Slackerino
           </Header>
-          <br />
           <br />
           <br />
           <br />

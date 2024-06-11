@@ -1,4 +1,4 @@
-.login-container {
+/* .login-container {
   height: 100svh;
   display: flex;
   align-items: center;
@@ -15,7 +15,7 @@
   justify-content: center;
   gap: 5px;
   /* background-color: green; */
-}
+/* }
 .login-button {
   margin-top: 10px;
   display: flex;
@@ -52,4 +52,83 @@
 }
 span h1{
   margin-top: 0;
+} */ 
+
+html, body {
+  background-color:black;
+  color: black;
 }
+
+.logo {
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+.login-header-text {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.text1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.login-form-segment {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.login-button {
+  background-color: #2185d0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.login-button:hover {
+  background-color: #1678c2;
+}
+
+.google {
+  background-color: #db4437  !important;
+  color: white  !important;
+}
+
+.google:hover {
+  background-color: #ba1f0a !important;
+}
+
+.apple {
+  background-color: #333333  !important;
+  color: white  !important;
+}
+
+.apple:hover {
+  background-color: rgb(22, 22, 22)  !important;
+}
+
+.login-header-text a {
+  color: teal;
+}
+
+.login-header-text a:hover {
+  color: #1678c2;
+}
+
