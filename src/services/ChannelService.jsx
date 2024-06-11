@@ -24,16 +24,14 @@ const ChannelService = {
       const { data } = res;
 
       if (data) {
-        // setChannels(data.data);
         //SET INITIAL VALUE TO THE FIRST ITEM IN ARRAY
         if (data) {
           setChannels(data.data);
-          // setAddNewChannelFlag(false);
           if (!isReloadChannelList) {
             if (data.data) {
               setHeaderName(data.data[0].name);
               setChatId(data.data[0].id);
-              setIsChannel(true)
+              setIsChannel(true);
             }
           }
           setAddNewChannelFlag(false);
@@ -59,7 +57,7 @@ const ChannelService = {
         expiry: user.expiry,
         uid: user.uid,
       };
-      
+
       const params = {
         name: newChannelName,
         user_ids: memberIds,
@@ -67,7 +65,7 @@ const ChannelService = {
 
       const res = await axios.post(`${API_URL}/channels`, params, { headers });
       const { data } = res;
-      
+
       if (res.status === 200 || res.status === 201) {
         if (data.errors) {
           alert(data.errors);
@@ -80,17 +78,10 @@ const ChannelService = {
     } catch (error) {
       alert(error.message);
     }
-    setAddNewChannelFlag(true)
+    setAddNewChannelFlag(true);
   },
 
-
-
-
-  addUsers: async function (
-    user,
-    selectedList,
-    channelId
-  ) {
+  addUsers: async function (user, selectedList, channelId) {
     try {
       const headers = {
         "access-token": user.accessToken,
@@ -98,15 +89,17 @@ const ChannelService = {
         expiry: user.expiry,
         uid: user.uid,
       };
-      
+
       const params = {
         id: channelId,
-        member_id: selectedList
+        member_id: selectedList,
       };
 
-      const res = await axios.post(`${API_URL}/channel/add_member`, params, { headers });
+      const res = await axios.post(`${API_URL}/channel/add_member`, params, {
+        headers,
+      });
       const { data } = res;
-      
+
       if (res.status === 200 || res.status === 201) {
         if (data.errors) {
           alert(data.errors);
@@ -120,7 +113,6 @@ const ChannelService = {
       alert(error.message);
     }
   },
-
 };
 
 export default ChannelService;

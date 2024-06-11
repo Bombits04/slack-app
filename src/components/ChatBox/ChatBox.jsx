@@ -8,28 +8,23 @@ function ChatBox(props) {
 
   const [channelMessages, setChannelMessages] = useState();
   const [timer, setTimer] = useState(false);
-  async function fetchMessages() {
-    await MessageService.getMessage(
-      user,
-      chatId,
-      recClass,
-      setChannelMessages
-    );
-  }
-  useEffect(() => {
-
-    //request messges every 2 seconds
-    setTimer(false);
-    if (timer) {
-    fetchMessages();
-  }
-    if (!timer ){
-      setTimeout(()=>{
-        setTimer(true)
-      }, 2000)
-    }
-  }, [timer]);
   
+  useEffect(() => {
+    async function fetchMessages() {
+      await MessageService.getMessage(
+        user,
+        chatId,
+        recClass,
+        setChannelMessages
+      );
+    }
+    //removed auto fetching of message due to public demand 😂
+    if (getMsgFlag) {
+      fetchMessages();
+      setGetMsgFlag(false);
+    }
+    
+  }, [chatId, recClass, getMsgFlag]);
 
   const handleReaction = (msgId, emoji) => {
     setChannelMessages((prevMessages) =>
@@ -49,18 +44,27 @@ function ChatBox(props) {
       })
     );
   };
-//  console.log(channelMessages);
   return (
     <div className="chatbox">
-      {channelMessages && channelMessages.map((msg) => (
-        <div className={user.id === msg.sender.id ? "sender" : "receiver"} key={msg.id}>
-          <div className="chat-bubble">
-            <i>{msg.sender.email}</i>: {msg.body}
-            <ReactionEmojis onReact={(emoji) => handleReaction(msg.id, emoji)} />
-            {msg.reaction && <span className="reaction"><p>Reacted {msg.reaction} to your message</p></span>}
+      {channelMessages &&
+        channelMessages.map((msg) => (
+          <div
+            className={user.id === msg.sender.id ? "sender" : "receiver"}
+            key={msg.id}
+          >
+            <div className="chat-bubble">
+              <i>{msg.sender.email}</i>: {msg.body}
+              <ReactionEmojis
+                onReact={(emoji) => handleReaction(msg.id, emoji)}
+              />
+              {msg.reaction && (
+                <span className="reaction">
+                  <p>Reacted {msg.reaction} to your message</p>
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }

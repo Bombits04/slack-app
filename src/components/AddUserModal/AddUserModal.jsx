@@ -14,21 +14,21 @@ function AddUserModal(props) {
   const [selected, setSelected] = useState([]);
   var listOfUsers = [];
   var selectedList = 0;
-  
+
   userList.map((usr) => {
     const users = {
       label: usr.uid,
-      value: usr.id
-    }
+      value: usr.id,
+    };
     listOfUsers.push(users);
   });
 
   selected.map((ids) => {
     selectedList = ids.value;
-  })
+  });
 
-  async function addUsers(){
-    await ChannelService.addUsers(user, selectedList, chatId)
+  async function addUsers() {
+    await ChannelService.addUsers(user, selectedList, chatId);
     setShow(false);
   }
   return (

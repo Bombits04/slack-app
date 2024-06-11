@@ -8,7 +8,6 @@ import ChatBox from "../../components/ChatBox/ChatBox";
 import ModalAddChannel from "../../components/AddChannelModal/AddChannelModal";
 import logo from "../../assets/images/app_logo.png";
 import { Button, Modal, Icon, Grid, Input } from "semantic-ui-react";
-import AddDirectMsgModal from "../../components/AddDirectMsgModal/AddDirectMsgModal";
 import AddUserModal from "../../components/AddUserModal/AddUserModal";
 import { EMOJI_LIST } from "../../constants/Constants";
 
@@ -28,14 +27,11 @@ function Dashboard(props) {
   const [fetchChannelFlag, setFetchChannelFlag] = useState(true);
   const [chatId, setChatId] = useState(0);
   const [getMsgFlag, setGetMsgFlag] = useState(true);
-  const [directMessages, setDirectMessages] = useState([]);
-  // const [getDirectMessagesFlag, setDirectMessagesFlag] = useState(true);
   const [getDirectMessageUsers, setDirectMessageUsers] = useState([]);
   const [recClass, setRecClass] = useState();
   const [addNewChannelFlag, setAddNewChannelFlag] = useState();
   const [isReloadChannelList, setIsReloadChannelList] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
-  var listOfIds = [];
   const [emojiModalOpen, setEmojiModalOpen] = useState(false);
   const [filteredUserList, setFilteredUserList] = useState([]);
   const [isChannel, setIsChannel] = useState();
@@ -45,7 +41,6 @@ function Dashboard(props) {
     if (!loggedin) {
       navigate("/");
     } else {
-      // console.log("Start");
       //FETCH USER START
       async function fetchUsers() {
         const users = await UserService.getUsers(user);
@@ -69,6 +64,7 @@ function Dashboard(props) {
           setAddNewChannelFlag,
           setIsChannel
         );
+        setRecClass("Channel");
       }
 
       if (fetchChannelFlag) {
@@ -77,14 +73,9 @@ function Dashboard(props) {
       //FETCH CHANNELS END
 
       async function fetchUserDmList() {
-        //   setDirectMessages([]);
-        setDirectMessageUsers([]);
-        setDirectMessageUsers([]);
-        const dirMsgs = await UserService.getDirectMessages(
+        await UserService.getDirectMessages(
           user,
           userList,
-          // setDirectMessages,
-          // setDirectMessagesFlag,
           setDirectMessageUsers
         );
       }
@@ -121,7 +112,6 @@ function Dashboard(props) {
       return user.uid.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredUserList(filteredList);
-    console.log(filteredList);
   }, [searchTerm, userList]);
 
   const handleChangeSearch = (event) => {
@@ -168,15 +158,10 @@ function Dashboard(props) {
     }
 
     if (id && recClass === "User") {
-      // console.log(getDirectMessageUsers);
-      // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
-
       const retVal = userList.find((ret) => ret.id === id);
-      // console.log(retVal);
       setHeaderName(retVal.uid);
       setIsChannel(false);
     }
-
     setChatId(id);
     setRecClass(recClass);
     setGetMsgFlag(true);
@@ -242,37 +227,39 @@ function Dashboard(props) {
           </div>
 
           <div className="menu-icons">
-          <Icon name="user" size="large" onClick={() => navigate("/welcome")} />
-          <Icon name="dashboard" size="large" onClick={() => {
-                  setTimeout(() => {
-                    navigate("/redirect");
-                  }, 1000);
-                  setTimeout(() => {
-                    navigate("/dashboard");
-                  }, 7000);
-                }} />
-          <Icon name="setting" size="large" onClick={() => navigate("/settings")} />
-          <Icon name="sign-out" size="large" onClick={logout} />
-        </div>
-          {/* <span className="logout">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30px"
-              onClick={logout}
-              viewBox="0 0 512 512"
-            >
-              <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
-            </svg>
-          </span> */}
+            <Icon
+              name="user"
+              size="large"
+              onClick={() => navigate("/welcome")}
+            />
+            <Icon
+              name="dashboard"
+              size="large"
+              onClick={() => {
+                setTimeout(() => {
+                  navigate("/redirect");
+                }, 1000);
+                setTimeout(() => {
+                  navigate("/dashboard");
+                }, 7000);
+              }}
+            />
+            <Icon
+              name="setting"
+              size="large"
+              onClick={() => navigate("/settings")}
+            />
+            <Icon name="sign-out" size="large" onClick={logout} />
+          </div>
         </div>
         <div className="sbar-wrapper">
           <div className="app-title">My Dashboard</div>
-           {/* display nya yung currently logged in user */}
-            <div className="current-user-container">
-              <div className="current-user">
-                    <span>Logged in as:  {user.uid}</span>
-                </div>
+          {/* display nya yung currently logged in user */}
+          <div className="current-user-container">
+            <div className="current-user">
+              <span>Logged in as: {user.uid}</span>
             </div>
+          </div>
           <div className="channel-header">
             <span>Channels</span>
             <ModalAddChannel
@@ -301,13 +288,6 @@ function Dashboard(props) {
                     >
                       {name}
                     </span>
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="10px"
-                      viewBox="0 0 448 512"
-                    >
-                      <path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-                    </svg> */}
                   </div>
                 );
               })}
@@ -316,18 +296,7 @@ function Dashboard(props) {
             )}
           </div>
           <div className="direct-message-header">
-            {/* <span>Direct Messages</span> */}
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18px"
-              viewBox="0 0 640 512"
-            >
-              <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-            </svg> */}
-
-            <div className="direct-message-header">
-              <span>Direct Messages</span>
-            </div>
+            <span>Direct Messages</span>
           </div>
           <div className="directmsg-list">
             {console.log(getDirectMessageUsers)}
@@ -367,9 +336,9 @@ function Dashboard(props) {
             <span className="rubik-bold600 header-name">{headerName}</span>
             {isChannel && (
               <AddUserModal
-                user = {user}
-                userList = {userList}
-                headerName ={headerName}
+                user={user}
+                userList={userList}
+                headerName={headerName}
                 chatId={chatId}
               ></AddUserModal>
             )}

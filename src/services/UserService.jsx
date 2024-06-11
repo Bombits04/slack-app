@@ -24,7 +24,6 @@ const UserService = {
   getDirectMessages: async function (user, userList, setDirectMessageUsers) {
     let temp = [];
     try {
-      
       const headers = {
         "access-token": user.accessToken,
         expire: user.expiry,
@@ -39,18 +38,13 @@ const UserService = {
         });
         const { data } = res;
         if (data.data.length !== 0) {
-        //   setTemp((a) => [
-        //     ...a,
-        //     a.find((chk) => chk === user.id) ? null : user.id,
-        //   ]);
-        // }
-        // setDirectMessageUsers(temp.filter((id) => id !== null))
-
-        temp = [... temp, temp.find((chk) => chk === user.id) ? null : user.id]
-        setDirectMessageUsers(temp.filter((id) => id !== null))
-      }
-      
-    });
+          temp = [
+            ...temp,
+            temp.find((chk) => chk === user.id) ? null : user.id,
+          ];
+          setDirectMessageUsers(temp.filter((id) => id !== null));
+        }
+      });
     } catch (err) {
       alert(err);
     }

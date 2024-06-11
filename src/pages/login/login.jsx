@@ -8,7 +8,6 @@ import logo from "../../assets/images/app_logo.png";
 
 function Login(props) {
   const { setIsLoggedIn } = props;
-  //   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [user, setUser] = useState(() =>
@@ -21,7 +20,6 @@ function Login(props) {
       setIsLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/welcome");
-      // console.log(user);
     }
   }, [user, navigate, setIsLoggedIn]);
 

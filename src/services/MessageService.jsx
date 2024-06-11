@@ -2,13 +2,12 @@ import { API_URL } from "../constants/Constants";
 import axios from "axios";
 
 const MessageService = {
-
-getMessage: async function (user, channelId, recClass, setChannelMessages) {
+  getMessage: async function (user, channelId, recClass, setChannelMessages) {
     //FOR DEBUGGING
     // console.log(user);
     // console.log(channelId);
     // console.log(recClass);
-    
+
     try {
       const headers = {
         "access-token": user.accessToken,
@@ -21,7 +20,6 @@ getMessage: async function (user, channelId, recClass, setChannelMessages) {
       const { data } = res;
 
       if (data) {
-        console.log(channelId)
         setChannelMessages(data.data);
       }
     } catch (error) {
@@ -29,9 +27,15 @@ getMessage: async function (user, channelId, recClass, setChannelMessages) {
     }
   },
 
-  sendMessage: async function(user, userId, recClass, request,setInputMessage){
-    try{
-    const headers = {
+  sendMessage: async function (
+    user,
+    userId,
+    recClass,
+    request,
+    setInputMessage
+  ) {
+    try {
+      const headers = {
         "access-token": user.accessToken,
         client: user.client,
         expiry: user.expiry,
@@ -43,15 +47,14 @@ getMessage: async function (user, channelId, recClass, setChannelMessages) {
 
       if (data.errors) {
         alert(data.errors);
-      }else{
+      } else {
         //do nothing
       }
-        
-     }catch (error) {
-        return alert(error);
-      }
-      setInputMessage("");
-},
-}
+    } catch (error) {
+      return alert(error);
+    }
+    setInputMessage("");
+  },
+};
 
 export default MessageService;
