@@ -52,7 +52,7 @@ const Welcome = () => {
             }, 10000);
           }} />
           <Icon name="setting" size="large" onClick={() => navigate("/settings")} />
-          <Icon name="sign-out" size="large" onClick={handleSignOut} />
+          <Icon name="sign-out" size="large" onClick={handleDifferentEmail}/>
         </div>
       </div>
 
