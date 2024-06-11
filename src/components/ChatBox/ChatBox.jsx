@@ -7,23 +7,29 @@ function ChatBox(props) {
   const { user, chatId, recClass, getMsgFlag, setGetMsgFlag } = props;
 
   const [channelMessages, setChannelMessages] = useState();
-
+  const [timer, setTimer] = useState(false);
+  async function fetchMessages() {
+    await MessageService.getMessage(
+      user,
+      chatId,
+      recClass,
+      setChannelMessages
+    );
+  }
   useEffect(() => {
-    async function fetchMessages() {
-      await MessageService.getMessage(
-        user,
-        chatId,
-        recClass,
-        setChannelMessages
-      );
-    }
 
-    if (getMsgFlag) {
-      fetchMessages();
-      setGetMsgFlag(false);
+    //request messges every 2 seconds
+    setTimer(false);
+    if (timer) {
+    fetchMessages();
+  }
+    if (!timer ){
+      setTimeout(()=>{
+        setTimer(true)
+      }, 2000)
     }
-    
-  }, [chatId, recClass, getMsgFlag]);
+  }, [timer]);
+  
 
   const handleReaction = (msgId, emoji) => {
     setChannelMessages((prevMessages) =>
@@ -43,7 +49,7 @@ function ChatBox(props) {
       })
     );
   };
- console.log(channelMessages);
+//  console.log(channelMessages);
   return (
     <div className="chatbox">
       {channelMessages && channelMessages.map((msg) => (

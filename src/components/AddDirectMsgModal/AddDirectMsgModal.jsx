@@ -31,8 +31,8 @@ function AddDirectMsgModal(props) {
       }
     });
 
-    if (addUser.recId && addUser.recUid) {
-      setDirectMessageUsers((ids) => [...ids, addUser]);
+    if (addUser.recId) {
+      setDirectMessageUsers((ids) => [...ids, addUser.id]);
     } else {
       alert("User does not exist!");
     }

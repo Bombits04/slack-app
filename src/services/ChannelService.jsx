@@ -82,6 +82,45 @@ const ChannelService = {
     }
     setAddNewChannelFlag(true)
   },
+
+
+
+
+  addUsers: async function (
+    user,
+    selectedList,
+    channelId
+  ) {
+    try {
+      const headers = {
+        "access-token": user.accessToken,
+        client: user.client,
+        expiry: user.expiry,
+        uid: user.uid,
+      };
+      
+      const params = {
+        id: channelId,
+        member_id: selectedList
+      };
+
+      const res = await axios.post(`${API_URL}/channel/add_member`, params, { headers });
+      const { data } = res;
+      
+      if (res.status === 200 || res.status === 201) {
+        if (data.errors) {
+          alert(data.errors);
+        } else {
+          alert("added user to channel");
+        }
+      } else {
+        alert("Errors were encountered :(");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  },
+
 };
 
 export default ChannelService;
