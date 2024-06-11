@@ -393,7 +393,7 @@ function Dashboard(props) {
               icon
               onClick={() => setEmojiModalOpen(true)}
               style={{ backgroundColor: "teal", color: "white" }}
-            >
+            />
             
             <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white",                className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
@@ -411,10 +411,7 @@ function Dashboard(props) {
                 padding: "10px 20px",
                 className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
-                className: "chatbox-buttons",
-                transition: "background-color 0.3s ease",
               }}
-              className="chatbox-buttons-hovered"
               className="chatbox-buttons-hovered"
             >
               <Icon name="file outline" />
@@ -427,10 +424,7 @@ function Dashboard(props) {
                 padding: "10px 20px",
                 className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
-                className: "chatbox-buttons",
-                transition: "background-color 0.3s ease",
               }}
-              className="chatbox-buttons-hovered"
               className="chatbox-buttons-hovered"
             >
               <Icon name="camera" />
@@ -444,10 +438,7 @@ function Dashboard(props) {
                 padding: "10px 20px",
                 className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
-                className: "chatbox-buttons",
-                transition: "background-color 0.3s ease",
               }}
-              className="chatbox-buttons-hovered"
               className="chatbox-buttons-hovered"
             >
               Send
