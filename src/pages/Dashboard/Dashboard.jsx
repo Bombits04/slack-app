@@ -9,6 +9,8 @@ import ModalAddChannel from "../../components/AddChannelModal/AddChannelModal";
 import logo from "../../assets/images/app_logo.png";
 import { Button, Modal, Icon, Grid, Input } from "semantic-ui-react";
 import AddDirectMsgModal from "../../components/AddDirectMsgModal/AddDirectMsgModal";
+import AddUserModal from "../../components/AddUserModal/AddUserModal";
+import { EMOJI_LIST } from "../../constants/Constants";
 
 function Dashboard(props) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +38,7 @@ function Dashboard(props) {
   var listOfIds = [];
   const [emojiModalOpen, setEmojiModalOpen] = useState(false);
   const [filteredUserList, setFilteredUserList] = useState([]);
+  const [isChannel, setIsChannel] = useState();
 
   useEffect(() => {
     //check if user accessed the page before logging in. If logged in, continue, if not, redirect to home
@@ -62,9 +65,9 @@ function Dashboard(props) {
           setHeaderName,
           setChatId,
           setFetchChannelFlag,
-          setIsReloadChannelList,
           isReloadChannelList,
-          setAddNewChannelFlag
+          setAddNewChannelFlag,
+          setIsChannel
         );
       }
 
@@ -91,22 +94,21 @@ function Dashboard(props) {
 
   useEffect(() => {
     async function refreshChannels() {
+      setIsReloadChannelList(true);
       await ChannelService.getChannels(
         user,
         setChannels,
         setHeaderName,
         setChatId,
         setFetchChannelFlag,
-        setIsReloadChannelList,
         isReloadChannelList,
-        setAddNewChannelFlag
+        setAddNewChannelFlag,
+        setIsChannel
       );
     }
 
     refreshChannels();
   }, [addNewChannelFlag]);
-
-  
 
   useEffect(() => {
     if (searchTerm === "") {
@@ -140,10 +142,10 @@ function Dashboard(props) {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -160,6 +162,7 @@ function Dashboard(props) {
     if (id && recClass === "Channel") {
       const retVal = channelList.find((ret) => ret.id === id);
       setHeaderName(retVal.name);
+      setIsChannel(true)
     }
 
     if (id && recClass === "User") {
@@ -169,18 +172,9 @@ function Dashboard(props) {
       const retVal = userList.find((ret) => ret.id === id);
       // console.log(retVal);
       setHeaderName(retVal.uid);
-
-      // if (userType === "sender") {
-      //    // console.log(getDirectMessageUsers);
-      //   // const retVal = getDirectMessageUsers.find((ret) => ret.recId === id)
-      //   const retValtemp2 = getDirectMessageUsers.filter(
-      //     (fltr) => fltr !== null
-      //   );
-      //   const retVal2 = retValtemp2.find((ret) => ret.sendId === id);
-      //   // console.log(retVal2);
-      //   setHeaderName(retVal2.sendUid);
-      // }
+      setIsChannel(false)
     }
+
     setChatId(id);
     setRecClass(recClass);
     setGetMsgFlag(true);
@@ -231,7 +225,9 @@ function Dashboard(props) {
                     ? filteredUserList.map((user) => (
                         <div key={user.id}>
                           <button onClick={() => setChangeSearchedUser(user)}>
-                            <p>{user.id}: {user.uid}</p>
+                            <p>
+                              {user.id}: {user.uid}
+                            </p>
                           </button>
                         </div>
                       ))
@@ -296,13 +292,13 @@ function Dashboard(props) {
                     >
                       {name}
                     </span>
-                    <svg
+                    {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10px"
                       viewBox="0 0 448 512"
                     >
                       <path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-                    </svg>
+                    </svg> */}
                   </div>
                 );
               })}
@@ -358,7 +354,10 @@ function Dashboard(props) {
         </div>
 
         <div className="main-wrapper">
+          <div className="header-container">
           <span className="rubik-bold600 header-name">{headerName}</span>
+          {isChannel && <AddUserModal></AddUserModal>}
+          </div>
           <div className="chat-box">
             <ChatBox
               user={user}
@@ -378,16 +377,38 @@ function Dashboard(props) {
                 
               <i class="smile outline icon"></i>
             </Button>
-            <Button icon style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }} >
+            <Button
+              icon
+              style={{
+                backgroundColor: "teal",
+                color: "white",
+                padding: "10px 20px",
+              }}
+            >
               <Icon name="file outline" />
             </Button>
-            <Button icon style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }}>
+            <Button
+              icon
+              style={{
+                backgroundColor: "teal",
+                color: "white",
+                padding: "10px 20px",
+              }}
+            >
               <Icon name="camera" />
             </Button>
-            <Button icon onClick={() => sendMessage(chatId, recClass)} style={{ backgroundColor: "teal", color: "white", padding: "10px 20px" }}>
+            <Button
+              icon
+              onClick={() => sendMessage(chatId, recClass)}
+              style={{
+                backgroundColor: "teal",
+                color: "white",
+                padding: "10px 20px",
+              }}
+            >
               Send
             </Button>
-            
+
             <Modal
               open={emojiModalOpen}
               onClose={() => setEmojiModalOpen(false)}
@@ -396,44 +417,8 @@ function Dashboard(props) {
               <Modal.Header>Select an Emoji</Modal.Header>
               <Modal.Content>
                 <Grid columns={15}>
-                {["😀", "😁", "😂", "😃", "😄", "😅", "😆", "😉", "😊", "😋", "😎", "😍", "😘", "😗", "😙", "😚",
-                    "🙂", "🤗", "🤩", "🤔", "🤨", "😐", "😑", "😶", "🙄", "😏", "😣", "😥", "😮", "🤐", "😯", "😪",
-                    "😫", "😴", "😌", "😛", "😜", "😝", "🤤", "😒", "😓", "😔", "😕", "🙃", "🤑", "😲", "☹️", "🙁",
-                    "😖", "😞", "😟", "😤", "😢", "😭", "😦", "😧", "😨", "😩", "😬", "😰", "😱", "😳", "🤯", "😵",
-                    "😡", "😠", "🤬", "😷", "🤒", "🤕", "🤢", "🤮", "🤧", "😇", "🤠", "🤡", "🤥", "🤫", "🤭", "🧐",
-                    "🤓", "😈", "👿", "👹", "👺", "💀", "☠️", "👻", "👽", "👾", "🤖", "💩", "😺", "😸", "😹", "😻",
-                    "😼", "😽", "🙀", "😿", "😾", "🙈", "🙉", "🙊", "🐵", "🐒", "🦍", "🐶", "🐕", "🐩", "🐺", "🦊",
-                    "🐱", "🐈", "🦁", "🐯", "🐅", "🐆", "🐴", "🐎", "🦄", "🦓", "🦌", "🐮", "🐂", "🐃", "🐄", "🐷",
-                    "🐖", "🐗", "🐽", "🐏", "🐑", "🐐", "🐪", "🐫", "🦙", "🦒", "🐘", "🦏", "🦛", "🐭", "🐁", "🐀",
-                    "🐹", "🐰", "🐇", "🐿️", "🦔", "🦇", "🐻", "🐨", "🐼", "🦥", "🦦", "🦨", "🦘", "🦡", "🐾", "🦃",
-                    "🐔", "🐓", "🐣", "🐤", "🐥", "🐦", "🐧", "🕊️", "🦅", "🦆", "🦢", "🦉", "🦚", "🦜", "🐸", "🐊",
-                    "🐢", "🦎", "🐍", "🐲", "🐉", "🦕", "🦖", "🐳", "🐋", "🐬", "🐟", "🐠", "🐡", "🦈", "🐙", "🐚",
-                    "🐌", "🦋", "🐛", "🐜", "🐝", "🐞", "🦗", "🕷️", "🕸️", "🦂", "🦟", "🦠", "💐", "🌸", "💮", "🏵️",
-                    "🌹", "🥀", "🌺", "🌻", "🌼", "🌷", "🌱", "🌲", "🌳", "🌴", "🌵", "🌾", "🌿", "☘️", "🍀", "🍁",
-                    "🍂", "🍃", "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏", "🍐", "🍑", "🍒", "🍓",
-                    "🥝", "🍅", "🥥", "🥑", "🍆", "🥔", "🥕", "🌽", "🌶️", "🥒", "🥬", "🥦", "🧄", "🧅", "🍄", "🥜",
-                    "🌰", "🍞", "🥐", "🥖", "🥨", "🥯", "🥞", "🧇", "🧀", "🍖", "🍗", "🥩", "🥓", "🍔", "🍟", "🍕",
-                    "🌭", "🥪", "🌮", "🌯", "🥙", "🧆", "🍳", "🥘", "🍲", "🥣", "🥗", "🍿", "🧈", "🧂", "🥫", "🍱",
-                    "🍘", "🍙", "🍚", "🍛", "🍜", "🍝", "🍠", "🍢", "🍣", "🍤", "🍥", "🥮", "🍡", "🥟", "🥠", "🥡",
-                    "🍦", "🍧", "🍨", "🍩", "🍪", "🎂", "🍰", "🧁", "🥧", "🍫", "🍬", "🍭", "🍮", "🍯", "🍼", "🥛",
-                    "☕", "🍵", "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🥤", "🧃", "🧉", "🧊", "🥢",
-                    "🍽️", "🍴", "🥄", "🔪", "🏺", "🌍", "🌎", "🌏", "🌐", "🗺️", "🗾", "🧭", "🏔️", "⛰️", "🌋", "🗻",
-                    "🏕️", "🏖️", "🏜️", "🏝️", "🏞️", "🏟️", "🏛️", "🏗️", "🧱", "🏘️", "🏚️", "🏠", "🏡", "🏢", "🏣",
-                    "🏤", "🏥", "🏦", "🏨", "🏩", "🏪", "🏫", "🏬", "🏭", "🏯", "🏰", "💒", "🗼", "🗽", "⛪", "🕌",
-                    "🛕", "🕍", "⛩️", "🕋", "⛲", "⛺", "🌁", "🌃", "🏙️", "🌄", "🌅", "🌆", "🌇", "🌉", "♨️", "🎠",
-                    "🎡", "🎢", "💈", "🎪", "🎭", "🖼️", "🎨", "🧵", "🧶", "👓", "🕶️", "🥽", "🥼", "👔", "👕", "👖",
-                    "🧣", "🧤", "🧥", "🧦", "👗", "👘", "👙", "👚", "👛", "👜", "👝", "🛍️", "🎒", "👞", "👟", "🥾",
-                    "🥿", "👠", "👡", "👢", "👑", "👒", "🎩", "🎓", "🧢", "⛑️", "💄", "💍", "💼", "📿", "🎀", "🎁",
-                    "🎏", "🎐", "🎎", "🏮", "🎫", "🧧", "✉️", "📧", "📨", "📩", "📤", "📥", "📦", "📫", "📪", "📬",
-                    "📭", "📮", "🗳️", "✏️", "✒️", "🖋️", "🖊️", "🖌️", "🖍️", "📝", "💼", "📁", "📂", "🗂️", "📅",
-                    "📆", "🗒️", "🗓️", "📇", "📈", "📉", "📊", "📋", "📌", "📍", "📎", "🖇️", "📏", "📐", "✂️", "🗃️",
-                    "🗄️", "🗑️", "🔒", "🔓", "🔏", "🔐", "🔑", "🗝️", "🔨", "⛏️", "⚒️", "🛠️", "🗡️", "⚔️", "🔫", "🏹",
-                    "🛡️", "🔧", "🔩", "⚙️", "🗜️", "⚖️", "🦯", "🔗", "⛓️", "🧰", "🧲", "⚗️", "🧪", "🧫", "🧬", "🔬",
-                    "🔭", "📡", "💉", "🩸", "💊", "🩹", "🩺", "🚪", "🛏️", "🛋️", "🪑", "🚽", "🚿", "🛁", "🪒", "🧴",
-                    "🧷", "🧹", "🧺", "🧻", "🧼", "🧽", "🧯", "🛒", "🚬", "⚰️", "⚱️", "🗿", "🪓", "🔮", "🪔", "🕰️",
-                    "⏱️", "⏲️", "⏰", "⌛", "⏳", "🔋", "🔌", "💻", "🖥️", "🖨️", "⌨️", "🖱️", "🖲️", "💽",
-                    "💾", "💿", "📀", "📼", "📷", "📸", "📹", "📽️", "🎥", "📺", "📻", "🎙️", "🎚️", "🎛️", "🧭"].map((emoji, index) => (
-                   <Grid.Column
+                  {EMOJI_LIST.map((emoji, index) => (
+                    <Grid.Column
                       key={index}
                       onClick={() => handleEmojiClick(emoji)}
                     >
@@ -445,8 +430,6 @@ function Dashboard(props) {
                 </Grid>
               </Modal.Content>
             </Modal>
-            
-
           </div>
         </div>
       </div>

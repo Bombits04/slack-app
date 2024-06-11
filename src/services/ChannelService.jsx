@@ -8,9 +8,9 @@ const ChannelService = {
     setHeaderName,
     setChatId,
     setFetchChannelFlag,
-    setGetMsgFlag,
     isReloadChannelList,
-    setAddNewChannelFlag
+    setAddNewChannelFlag,
+    setIsChannel
   ) {
     try {
       const headers = {
@@ -33,6 +33,7 @@ const ChannelService = {
             if (data.data) {
               setHeaderName(data.data[0].name);
               setChatId(data.data[0].id);
+              setIsChannel(true)
             }
           }
           setAddNewChannelFlag(false);
