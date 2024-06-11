@@ -346,3 +346,7 @@ textarea {
   margin-right: 15px;
   cursor: pointer;
 }
+
+.chatbox-buttons-hovered:hover {
+  background-color: rgb(2, 50, 50)!important;
+}
