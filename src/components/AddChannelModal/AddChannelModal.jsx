@@ -6,17 +6,33 @@ import ChannelService from '../../services/ChannelService';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
 import "./AddChannelModal.css";
+import { MultiSelect } from "react-multi-select-component";
 
 function AddChannelModal(props) {
 
-  const {user, setAddNewChannelFlag} = props
+  const {user, userList, setAddNewChannelFlag} = props
   const [show, setShow] = useState(false);
   const [newChannelName, setNewChannelName] = useState("");
-  const [memberIds, setMemberIds] = useState([]);
+  var memberIds =[];
 
   // const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
+  const [selected2, setSelected2] = useState([]);
+  var listOfUsers = [];
+  
+  userList.map((usr) => {
+    const users = {
+      label: usr.uid,
+      value: usr.id
+    }
+    listOfUsers.push(users);
+  });
+
+  selected2.map((ids) => {
+    memberIds.push(ids.value);
+  })
 
   async function addChannel(){
     await ChannelService.addChannel(user, setAddNewChannelFlag, newChannelName, memberIds);
@@ -51,15 +67,15 @@ function AddChannelModal(props) {
                 autoFocus
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="addchannelmodal.user">
-              <Form.Label>User</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="user@email.com"
-                value = {memberIds}
-                onChange = {(e2) => setMemberIds(e2.target.value)}
-              />
-            </Form.Group>
+            <div>
+            <h3>User(s)</h3>
+            <MultiSelect
+              options={listOfUsers}
+              value={selected2}
+              onChange={setSelected2}
+              labelledBy="Select"
+            />
+          </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>

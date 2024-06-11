@@ -277,6 +277,7 @@ function Dashboard(props) {
             <span>Channels</span>
             <ModalAddChannel
               user={user}
+              userList={userList}
               setAddNewChannelFlag={setAddNewChannelFlag}
             ></ModalAddChannel>
           </div>

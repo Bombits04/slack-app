@@ -62,7 +62,7 @@ const ChannelService = {
       
       const params = {
         name: newChannelName,
-        user_ids: [memberIds],
+        user_ids: memberIds,
       };
 
       const res = await axios.post(`${API_URL}/channels`, params, { headers });
