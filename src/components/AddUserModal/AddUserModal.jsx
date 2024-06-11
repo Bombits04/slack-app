@@ -1,14 +1,36 @@
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { MultiSelect } from "react-multi-select-component";
+import ChannelService from "../../services/ChannelService";
 
-function AddUserModal() {
+function AddUserModal(props) {
+  const { user, userList, headerName, chatId } = props;
+
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [selected, setSelected] = useState([]);
+  var listOfUsers = [];
+  var selectedList = 0;
+  
+  userList.map((usr) => {
+    const users = {
+      label: usr.uid,
+      value: usr.id
+    }
+    listOfUsers.push(users);
+  });
 
+  selected.map((ids) => {
+    selectedList = ids.value;
+  })
+
+  async function addUsers(){
+    await ChannelService.addUsers(user, selectedList, chatId)
+    setShow(false);
+  }
   return (
     <>
       <svg
@@ -24,32 +46,24 @@ function AddUserModal() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add users to {headerName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group
-              className="mb-3"
-              controlId="addchannelmodal.channelname"
-            >
-              <Form.Label>Channel Name</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="addchannelmodal.user">
-              <Form.Label>User</Form.Label>
-              <Form.Control type="email" placeholder="name@example.com" />
-            </Form.Group>
-          </Form>
+          <div>
+            <h3>User(s)</h3>
+            <MultiSelect
+              options={listOfUsers}
+              value={selected}
+              onChange={setSelected}
+              labelledBy="Select"
+            />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={addUsers}>
             Save Changes
           </Button>
         </Modal.Footer>

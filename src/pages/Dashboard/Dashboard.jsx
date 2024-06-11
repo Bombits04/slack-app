@@ -79,6 +79,7 @@ function Dashboard(props) {
       async function fetchUserDmList() {
         //   setDirectMessages([]);
         setDirectMessageUsers([]);
+        setDirectMessageUsers([]);
         const dirMsgs = await UserService.getDirectMessages(
           user,
           userList,
@@ -128,11 +129,12 @@ function Dashboard(props) {
     setSearchTerm(value);
   };
 
-  function setChangeSearchedUser(user) {
+  function setChangeSearchedUser(user, recClass) {
     setHeaderName(user.uid);
     setChatId(user.id);
-    // // setRecClass(recClass);
+    setRecClass(recClass);
     setGetMsgFlag(true);
+    setDirectMessageUsers((a) => [...a, user.id]);
   }
 
   useEffect(() => {
@@ -162,7 +164,7 @@ function Dashboard(props) {
     if (id && recClass === "Channel") {
       const retVal = channelList.find((ret) => ret.id === id);
       setHeaderName(retVal.name);
-      setIsChannel(true)
+      setIsChannel(true);
     }
 
     if (id && recClass === "User") {
@@ -172,7 +174,7 @@ function Dashboard(props) {
       const retVal = userList.find((ret) => ret.id === id);
       // console.log(retVal);
       setHeaderName(retVal.uid);
-      setIsChannel(false)
+      setIsChannel(false);
     }
 
     setChatId(id);
@@ -224,7 +226,9 @@ function Dashboard(props) {
                   {filteredUserList.length > 0
                     ? filteredUserList.map((user) => (
                         <div key={user.id}>
-                          <button onClick={() => setChangeSearchedUser(user)}>
+                          <button
+                            onClick={() => setChangeSearchedUser(user, "User")}
+                          >
                             <p>
                               {user.id}: {user.uid}
                             </p>
@@ -320,14 +324,14 @@ function Dashboard(props) {
               <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
             </svg> */}
 
-            <AddDirectMsgModal
-              userList={userList}
-              setDirectMessageUsers={setDirectMessageUsers}
-            ></AddDirectMsgModal>
+            <div className="direct-message-header">
+              <span>Direct Messages</span>
+            </div>
           </div>
           <div className="directmsg-list">
+            {console.log(getDirectMessageUsers)}
             {getDirectMessageUsers &&
-              getDirectMessageUsers?.toSorted().map((ids) => {
+              getDirectMessageUsers?.map((ids) => {
                 let returnVal = userList.find((val) => val.id === ids);
 
                 if (ids !== null && ids !== user.id) {
@@ -359,8 +363,15 @@ function Dashboard(props) {
 
         <div className="main-wrapper">
           <div className="header-container">
-          <span className="rubik-bold600 header-name">{headerName}</span>
-          {isChannel && <AddUserModal></AddUserModal>}
+            <span className="rubik-bold600 header-name">{headerName}</span>
+            {isChannel && (
+              <AddUserModal
+                user = {user}
+                userList = {userList}
+                headerName ={headerName}
+                chatId={chatId}
+              ></AddUserModal>
+            )}
           </div>
           <div className="chat-box">
             <ChatBox
@@ -376,6 +387,12 @@ function Dashboard(props) {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
             />
+
+            <Button
+              icon
+              onClick={() => setEmojiModalOpen(true)}
+              style={{ backgroundColor: "teal", color: "white" }}
+            >
             
             <Button icon onClick={() => setEmojiModalOpen(true)} style={{ backgroundColor: "teal", color: "white",                className: "chatbox-buttons",
                 transition: "background-color 0.3s ease",
